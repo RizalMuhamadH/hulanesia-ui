@@ -19,6 +19,7 @@
 <body class="font-poppins">
     <x-navbar></x-navbar>
     @yield('content')
+    <x-footer></x-footer>
     @yield('script')
 </body>
 </html>
