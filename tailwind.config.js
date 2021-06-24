@@ -11,6 +11,9 @@ module.exports = {
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif'],
       },
+      textColor: {
+        'teal-400': '#16bdca',
+      }
     },
   },
   variants: {
