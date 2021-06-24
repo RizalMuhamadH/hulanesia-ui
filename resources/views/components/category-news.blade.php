@@ -24,21 +24,21 @@
         </div>
 
         <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/150">
+            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/151">
             <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
                     Becoming a Luxury for the Wealthy</a></h2>
             <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
         </div>
 
         <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/150">
+            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/152">
             <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
                     Becoming a Luxury for the Wealthy</a></h2>
             <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
         </div>
 
         <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/150">
+            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/153">
             <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
                     Becoming a Luxury for the Wealthy</a></h2>
             <span class="text-xs text-gray-700 mt-1">5 Min ago</span>

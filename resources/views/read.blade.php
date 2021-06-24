@@ -4,18 +4,14 @@
 @endsection
 @section('content')
 
-    <div class="container mx-auto my-8">
-        <div class="flex flex-wrap">
-            <x-headline></x-headline>
-            <x-breaking-news></x-breaking-news>
-        </div>
-    </div>
+    <x-read-title-image></x-read-title-image>
+
     <div class="container mx-auto">
 
         <div class="flex flex-wrap">
 
             <div class="lg:w-2/3 w-full">
-                <x-recent-news></x-recent-news>
+                <x-read-body></x-read-body>
             </div>
 
 
@@ -26,9 +22,11 @@
 
         </div>
 
-        <x-category-news></x-category-news>
-
         <x-collection-news></x-collection-news>
+
+        <div class="container mx-auto border-t border-gray-300"></div>
+
+        <x-category-news></x-category-news>
     </div>
-    
+
 @endsection

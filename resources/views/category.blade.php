@@ -6,8 +6,7 @@
 
     <div class="container mx-auto my-8">
         <div class="flex flex-wrap">
-            <x-headline></x-headline>
-            <x-breaking-news></x-breaking-news>
+            <x-header-category></x-header-category>
         </div>
     </div>
     <div class="container mx-auto">
@@ -25,10 +24,6 @@
             </div>
 
         </div>
-
-        <x-category-news></x-category-news>
-
-        <x-collection-news></x-collection-news>
     </div>
     
 @endsection

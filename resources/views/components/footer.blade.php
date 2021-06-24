@@ -1,5 +1,5 @@
-<footer id="main-footer" class="">
-    <div class="max-w-6xl mx-auto clearfix border-t border-gray-200 py-6">
+<footer class="mt-8">
+    <div class="border-t border-gray-200 py-6">
         <div class="flex flex-wrap">
             <div class="lg:w-1/3 w-full lg:m-0 m-6 mb-0 text-center">
                 <p class="text-sm text-gray-700">Copyright 2021 Hulanesia</p>
