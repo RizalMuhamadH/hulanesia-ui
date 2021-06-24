@@ -12,8 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/swiper/6.7.0/swiper-bundle.min.js', 'public/js/swiper/6.7.0/swiper-bundle.min.js')
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
     ])
     .postCss('resources/css/swiper/6.7.0/swiper-bundle.min.css', 'public/css/swiper/6.7.0/swiper-bundle.min.css');
+mix.babel('resources/js/swiper/6.7.0/swiper-bundle.min.js', 'public/js/swiper/6.7.0/swiper-bundle.min.js')
