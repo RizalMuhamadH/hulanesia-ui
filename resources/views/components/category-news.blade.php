@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="flex flex-wrap sm:space-x-4 md:space-x-8 space-x-10 justify-center">
+    <div class="flex flex-wrap md:space-x-8 justify-center">
         <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
             <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/150">
             <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
