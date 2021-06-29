@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class Headline extends Component
 {
+    public $headline = [];
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($headline)
     {
-        //
+        $this->headline = $headline;
     }
 
     /**

@@ -6,14 +6,15 @@ use Illuminate\View\Component;
 
 class BreakingNews extends Component
 {
+    public $posts = [];
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($posts)
     {
-        //
+        $this->posts = $posts;
     }
 
     /**

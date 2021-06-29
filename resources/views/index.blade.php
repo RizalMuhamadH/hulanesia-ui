@@ -5,8 +5,9 @@
     <x-slot name="content">
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
-                <x-headline></x-headline>
-                <x-breaking-news></x-breaking-news>
+                {{-- {{ dd($headline) }} --}}
+                <x-headline :headline="$headline"></x-headline>
+                <x-breaking-news :posts="$breakingNews"></x-breaking-news>
             </div>
         </div>
         <div class="container mx-auto">
