@@ -8,6 +8,7 @@ class ReadController extends Controller
 {
     public function index()
     {
+        // views($post)->record();
         return view('read');
     }
 }
