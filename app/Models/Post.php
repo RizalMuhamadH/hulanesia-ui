@@ -30,6 +30,8 @@ class Post extends Model implements Viewable
     ];
 
     protected $dates = ['published_at'];
+    
+    protected $guarded = [];
 
     public function publish()
     {

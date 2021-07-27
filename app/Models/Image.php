@@ -11,10 +11,10 @@ class Image extends Model
     use HasFactory;
     use Resizable;
 
-    protected $fillable = [
-        'path',
-        'caption'
-    ];
+    // protected $fillable = [
+    //     'path',
+    //     'caption'
+    // ];
 
     protected $guarded = [];
 

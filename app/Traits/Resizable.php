@@ -14,7 +14,7 @@ trait Resizable
      *
      * @return string
      */
-    public function thumbnail($type, $attribute = 'image')
+    public function thumbnail($type, $attribute = 'path')
     {
         // Return empty string if the field not found
         if (!isset($this->attributes[$attribute])) {

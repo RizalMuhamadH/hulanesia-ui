@@ -11,9 +11,12 @@ class CollectionNews extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $posts;
+    public $name;
+    public function __construct($posts, $name)
     {
-        //
+        $this->posts = $posts;
+        $this->name = $name;
     }
 
     /**

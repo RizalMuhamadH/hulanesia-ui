@@ -7,16 +7,16 @@
             <div class="relative h-full">
                 <div class="absolute z-20 bottom-0 left-0 flex flex-col px-3 py-3">
                     <div class="text-white text-sm py-2">
-                        {{ $item->created_at->format('d, M Y') }}
+                        {{ $item->created_at->format('d M Y, H:m') }} WIB
                     </div>
-                    <p class="font-medium text-white text-2xl line-clamp-2">
-                        {{ $item->title }}
-                    </p>
+                    <h1 class="font-medium text-white text-2xl line-clamp-2">
+                        <a href="{{ route('read', [$item->id, $item->created_at->format('dmY'), $item->slug]) }}">{{ $item->title }}</a>
+                    </h1>
                 </div>
 
                 <div class="h-full w-full bg-gray-600 absolute z-10 rounded-xl border-none opacity-30"></div>
                 <img class="rounded-xl w-full h-full align-middle border-none"
-                    src="http://127.0.0.2:8000/storage/{{ $item->image->thumbnail('medium', 'path') }}"
+                    src="/storage/{{ $item->image->thumbnail('medium', 'path') }}"
                     alt="{{ $item->title }}" />
             </div>
         </div>

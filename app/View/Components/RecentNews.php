@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
+use App\Models\Image;
 
 class RecentNews extends Component
 {
@@ -11,9 +12,13 @@ class RecentNews extends Component
      *
      * @return void
      */
-    public function __construct()
+
+    public $posts;
+    public $name;
+    public function __construct($posts, $name)
     {
-        //
+        $this->posts = $posts;
+        $this->name = $name;
     }
 
     /**

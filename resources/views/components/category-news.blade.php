@@ -1,8 +1,8 @@
-<div>
+<div class="mt-6">
 
     <div class="flex flex-row justify-between text-gray-900 mb-6 mx-4">
-        <h3 class="text-2xl font-semibold">Categories</h3>
-        <div class="flex text-base items-center">
+        <h3 class="text-2xl font-semibold">{{ $name }}</h3>
+        <a href="{{ route('category', \Illuminate\Support\Str::slug($name, '-')) }}" class="flex text-base items-center">
             <div>Lainnya</div>
             <div>
                 <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,38 +12,19 @@
                         fill="black" />
                 </svg>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div class="flex flex-wrap md:space-x-8 justify-center">
-        <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/150">
-            <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
-                    Becoming a Luxury for the Wealthy</a></h2>
-            <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
-        </div>
-
-        <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/151">
-            <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
-                    Becoming a Luxury for the Wealthy</a></h2>
-            <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
-        </div>
-
-        <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/152">
-            <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
-                    Becoming a Luxury for the Wealthy</a></h2>
-            <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
-        </div>
-
-        <div class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
-            <img class="w-full bg-gray-100 object-cover rounded overflow-hidden" src="https://picsum.photos/250/153">
-            <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1"><a href="#">Home Internet Is
-                    Becoming a Luxury for the Wealthy</a></h2>
-            <span class="text-xs text-gray-700 mt-1">5 Min ago</span>
-        </div>
-
+    <div class="flex flex-wrap md:space-x-8 md:mx-0 mx-2 justify-center">
+        @foreach ($posts as $item)
+            <a href="{{ route('read', [$item->id, $item->created_at->format('dmY'), $item->slug]) }}" class="flex flex-col md:w-1/5 w-full sm:h-auto h-64 sm:mt-0 mt-3">
+                <img class="w-full bg-gray-100 object-cover rounded overflow-hidden"
+                src="/storage/{{ $item->image->thumbnail('medium', 'path') }}"
+                alt="{{ $item->title }}">
+                <h2 class="text-normal font-semibold text-gray-900 leading-tight mt-1">{{ $item->title }}</h2>
+                <span class="text-xs text-gray-700 mt-1">{{ $item->created_at->format('d M Y, H:m') }} WIB</span>
+            </a>
+        @endforeach
     </div>
 
 </div>

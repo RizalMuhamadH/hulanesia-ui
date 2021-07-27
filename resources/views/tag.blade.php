@@ -1,19 +1,14 @@
 <x-layouts.app>
     @push('title')
-    <title>Hulanesia | Category</title>
+    <title>Hulanesia | Tag</title>
     @endpush
     <x-slot name="content">
-        <div class="container mx-auto my-8">
-            <div class="flex flex-wrap">
-                <x-header-category :posts="$headline"></x-header-category>
-            </div>
-        </div>
         <div class="container mx-auto">
     
             <div class="flex flex-wrap">
     
                 <div class="lg:w-2/3 w-full">
-                    <x-recent-news :posts="$categories" :name="''"></x-recent-news>
+                    <x-recent-news :posts="$posts" :name="''"></x-recent-news>
 
                     <x-paginate></x-paginate>
                 </div>
