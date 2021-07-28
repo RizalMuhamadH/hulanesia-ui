@@ -10,7 +10,7 @@
                 <button type="button" x-on:click="toggle"
                     class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
+                    <span class="sr-only">Menu</span>
                     <!--
               Icon when menu is closed.
   
@@ -48,28 +48,32 @@
                 <div class="hidden sm:block sm:ml-6">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/" class="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-semibold"
+                        <a href="/"
+                            class="px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
                             aria-current="page">Home</a>
 
-                        <a href="/kesehatan"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Kesehatan</a>
-
-                        <a href="/gadget"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Gadget</a>
-
-                        <a href="/hobby"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Hobby</a>
-                        <a href="/olahraga"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Olahraga</a>
-                        <a href="/traveling"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Traveling</a>
-                        <a href="/gaya-hidup"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Gaya Hidup</a>
-                        <a href="/otomotif"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold">Otomotif</a>
+                        @foreach ($menu as $item)
+                            <a href="{{ route('category', $item->slug) }}"
+                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item->slug ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item->name }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
+
+            <form action="{{ route('search') }}" method="GET" role="search">
+                <div class="hidden sm:block relative pull-right pl-4 pr-4 md:pr-0">
+                    <input type="search" name="word" placeholder="Search"
+                        class="w-full bg-gray-900 text-sm text-gray-400 transition border border-gray-800 focus:outline-none focus:border-gray-600 rounded py-1 px-2 pl-10 appearance-none leading-normal" value="{{ old('word') }}">
+                    <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
+                        <svg class="fill-current pointer-events-none text-gray-500 w-4 h-4"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </form>
 
         </div>
     </div>
@@ -78,26 +82,30 @@
     <div class="sm:hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1" :class="isOpen == true ? '' : 'hidden'">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+            <a href="/"
+                class="block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
                 aria-current="page">Home</a>
 
-            <a href="/kesehatan"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Kesehatan</a>
+            @foreach ($menu as $item)
+                <a href="{{ route('category', $item->slug) }}"
+                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item->slug ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item->name }}</a>
+            @endforeach
 
-            <a href="/gadget"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gadget</a>
+            <form action="{{ route('search') }}" method="GET" role="search">
+                <div class="relative pl-4 pr-4 md:pr-0">
+                    <input type="search" name="word" placeholder="Search"
+                        class="w-full bg-gray-900 text-sm text-gray-400 transition border border-gray-800 focus:outline-none focus:border-gray-600 rounded py-1 px-2 pl-10 appearance-none leading-normal" value="{{ old('word') }}">
+                    <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
+                        <svg class="fill-current pointer-events-none text-gray-500 w-4 h-4"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path
+                                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </form>
 
-            <a href="/hobby"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Hobby</a>
-
-                <a href="/olahraga"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Olahraga</a>
-
-            <a href="/traveling"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Traveling</a>
-
-            <a href="/gaya-hidup"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Gaya Hidup</a>
         </div>
     </div>
 </nav>

@@ -13,7 +13,12 @@ module.exports = {
       },
       textColor: {
         'teal-400': '#16bdca',
-      }
+      },
+      height: {
+        100: '32rem',
+        101: '36rem',
+        102: '42rem'
+       }
     },
   },
   variants: {

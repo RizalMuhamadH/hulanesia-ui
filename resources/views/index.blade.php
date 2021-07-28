@@ -2,6 +2,9 @@
     @push('title')
         <title>Hulanesia</title>
     @endpush
+    <x-slot name="nav">
+        <x-navbar :menu="$menu"></x-navbar>
+    </x-slot>
     <x-slot name="content">
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
@@ -32,11 +35,11 @@
             <x-category-news :posts="$hobby" :name="'Hobby'"></x-category-news>
 
             <x-collection-news :posts="$olahraga" :name="'Olahraga'"></x-collection-news>
-            
+
             <x-category-news :posts="$traveling" :name="'Traveling'"></x-category-news>
 
             <x-collection-news :posts="$gaya_hidup" :name="'Gaya hidup'"></x-collection-news>
-            
+
             <x-category-news :posts="$otomotif" :name="'Otomotif'"></x-category-news>
         </div>
     </x-slot>

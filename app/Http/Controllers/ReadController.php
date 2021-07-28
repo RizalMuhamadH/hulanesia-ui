@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
 
@@ -17,6 +18,8 @@ class ReadController extends Controller
         
         $popular = $post->publish()->orderByViews('desc', Period::pastDays(7))->take(5)->get();
 
-        return view('read', compact(['post', 'related', 'popular']));
+        $menu = Category::where('order', '<>', 0)->orderBy('order', 'ASC')->get();
+
+        return view('read', compact(['post', 'related', 'popular', 'menu']));
     }
 }

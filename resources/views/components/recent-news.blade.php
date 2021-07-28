@@ -1,7 +1,7 @@
 <div>
 
     <div class="flex flex-wrap text-gray-900 mb-6">
-        <h3 class="text-2xl font-semibold">{{ $name }}</h3>
+        <h3 class="text-2xl font-semibold">{!! $name !!}</h3>
     </div>
 
     @foreach ($posts as $item)

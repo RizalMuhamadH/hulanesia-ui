@@ -1,24 +1,19 @@
 <x-layouts.app>
     @push('title')
-    <title>Hulanesia | Category</title>
+    <title>Search {{ $word }}</title>
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
     </x-slot>
     <x-slot name="content">
-        <div class="container mx-auto my-8">
-            <div class="flex flex-wrap">
-                <x-header-category :posts="$headline" :name="$category->name"></x-header-category>
-            </div>
-        </div>
         <div class="container mx-auto">
     
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap mt-10">
     
                 <div class="lg:w-2/3 w-full">
-                    <x-recent-news :posts="$categories" :name="''"></x-recent-news>
+                    <x-recent-news :posts="$posts" :name="'Search &#34;'.$word.'&#34;'"></x-recent-news>
 
-                    {{ $categories->links('vendor.pagination.custom') }}
+                    {{-- {{ $posts->links('vendor.pagination.custom') }} --}}
                 </div>
     
                 <div class="lg:w-1/3 w-full px-4">

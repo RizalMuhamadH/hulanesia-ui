@@ -2,6 +2,9 @@
     @push('title')
         <title>Hulanesia</title>
     @endpush
+    <x-slot name="nav">
+        <x-navbar :menu="$menu"></x-navbar>
+    </x-slot>
     <x-slot name="content">
         <x-read-title-image :post="$post"></x-read-title-image>
 

@@ -12,9 +12,11 @@ class HeaderCategory extends Component
      * @return void
      */
     public $posts;
-    public function __construct($posts)
+    public $name = '';
+    public function __construct($posts, $name)
     {
         $this->posts = $posts;
+        $this->name = $name;
     }
 
     /**

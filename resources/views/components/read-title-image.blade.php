@@ -44,7 +44,7 @@
         <!-- author-info -->
 
     </div>
-    <div class="md:rounded overflow-hidden shadow-2xl lg:w-3/4 w-full mb-10 self-center">
+    <div class="md:rounded overflow-hidden shadow-2xl lg:w-3/4 w-full md:h-101 h-full mb-10 self-center">
         <img src="/storage/{{ $post->image->thumbnail('medium') ?? '' }}" alt="{{ $post->title }}" class="object-cover w-full">
     </div>
     <p class="text-center text-sm md:mb-12 mb-5">
