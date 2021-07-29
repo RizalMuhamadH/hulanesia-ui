@@ -2,6 +2,15 @@
     @push('title')
     <title>Search {{ $word }}</title>
     @endpush
+    @push('head')
+    <meta name="description" content="Search">
+    <meta name="keywords" content="{{ env('META_KEYWORD') }}">
+    <meta name="author" content="hulanesia">
+    <meta property="og:title" content="Search {{ $word }}">
+    <meta property="og:description" content="Search">
+    <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
+    <meta property="og:site_name" content="Search">
+    @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
     </x-slot>

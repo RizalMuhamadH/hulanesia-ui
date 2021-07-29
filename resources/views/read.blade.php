@@ -1,6 +1,16 @@
 <x-layouts.app>
     @push('title')
-        <title>Hulanesia</title>
+        <title>{{ $post->title }}</title>
+    @endpush
+    
+    @push('head')
+    <meta name="description" content="{{ $post->meta_description ?? $post->description }}">
+    <meta name="keywords" content="{{ $post->meta_keywords ?? env('META_KEYWORD') }}">
+    <meta name="author" content="{{ $post->user->name }}">
+    <meta property="og:title" content="{{ $post->name }}">
+    <meta property="og:description" content="{{ $post->meta_description ?? $post->description }}">
+    <meta property="og:image" content="{{ url('/') }}/storage/{{ $post->image->thumbnail('medium') }}">
+    <meta property="og:site_name" content="{{ $post->title }}">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>

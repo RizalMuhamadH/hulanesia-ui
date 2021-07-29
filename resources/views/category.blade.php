@@ -1,6 +1,15 @@
 <x-layouts.app>
     @push('title')
-    <title>Hulanesia | Category</title>
+    <title>Hulanesia - {{ $category->name }}</title>
+    @endpush
+    @push('head')
+    <meta name="description" content="{{ $category->name }}">
+    <meta name="keywords" content="{{ env('META_KEYWORD') }}">
+    <meta name="author" content="hulanesia">
+    <meta property="og:title" content="{{ $category->name }}">
+    <meta property="og:description" content="{{ $category->name }}">
+    <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
+    <meta property="og:site_name" content="{{ $category->name }}">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
