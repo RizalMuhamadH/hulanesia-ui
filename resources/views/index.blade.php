@@ -3,13 +3,13 @@
         <title>Hulanesia</title>
     @endpush
     @push('head')
-    <meta name="description" content="Hulanesia">
-    <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-    <meta name="author" content="hulanesia">
-    <meta property="og:title" content="Hulanesia">
-    <meta property="og:description" content="hulanesia">
-    <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
-    <meta property="og:site_name" content="Hulanesia">
+        <meta name="description" content="Hulanesia">
+        <meta name="keywords" content="{{ env('META_KEYWORD') }}">
+        <meta name="author" content="hulanesia">
+        <meta property="og:title" content="Hulanesia">
+        <meta property="og:description" content="hulanesia">
+        <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
+        <meta property="og:site_name" content="Hulanesia">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
@@ -37,7 +37,15 @@
 
             </div>
 
-            <x-category-news :posts="$kesehatan" :name="'Kesehatan'"></x-category-news>
+            @foreach ($categories as $item)
+                @if (count($item['data']) == 4)
+                    <x-category-news :posts="$item['data']" :name="$item['name']"></x-category-news>
+                @else
+                    <x-collection-news :posts="$item['data']" :name="$item['name']"></x-collection-news>
+                @endif
+            @endforeach
+
+            {{-- <x-category-news :posts="$news_sains" :name="'News dan Sains'"></x-category-news>
 
             <x-collection-news :posts="$gadget" :name="'Gadget'"></x-collection-news>
 
@@ -49,7 +57,7 @@
 
             <x-collection-news :posts="$gaya_hidup" :name="'Gaya hidup'"></x-collection-news>
 
-            <x-category-news :posts="$otomotif" :name="'Otomotif'"></x-category-news>
+            <x-category-news :posts="$otomotif" :name="'Otomotif'"></x-category-news> --}}
         </div>
     </x-slot>
 </x-layouts.app>

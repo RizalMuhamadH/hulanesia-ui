@@ -25,9 +25,9 @@
             </div>
             <div class="lg:w-1/3 w-full lg:m-0 m-6 mb-0">
                 <ul class="text-center">
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="blank-page.html">Privacy</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="blank-page.html">Advertisement</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="contact.html">Contact Us</a> </li>
+                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'privacy') }}">Privacy</a> </li>
+                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'advertisement') }}">Advertisement</a> </li>
+                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'contact-us') }}">Contact Us</a> </li>
                 </ul>
             </div>
         </div>
