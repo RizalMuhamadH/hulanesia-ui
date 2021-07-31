@@ -64,7 +64,7 @@ class HomeController extends Controller
         return view('index', [
             'recent' => $recent,
             'headline' => $headline,
-            'editor_choice' => $editor_choice,
+            'editorChoice' => $editor_choice,
             'categories' => $categories,
             'popular' => $popular,
             'menu' => $menu

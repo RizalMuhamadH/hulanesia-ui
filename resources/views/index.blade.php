@@ -18,7 +18,7 @@
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
                 <x-headline :headline="$headline"></x-headline>
-                <x-breaking-news :posts="$editor_choice" :name="'Editor Choice'"></x-breaking-news>
+                <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news>
             </div>
         </div>
         <div class="container mx-auto">
