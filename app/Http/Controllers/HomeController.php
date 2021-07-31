@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $post = new Post();
         $headline = $post->publish()->with(['category', 'image'])->where('feature_id', 1)->take(5)->get();
-        $breakingNews = $post->publish()->with(['category', 'image'])->where('feature_id', 2)->take(5)->get();
+        $editor_choice = $post->publish()->with(['category', 'image'])->where('feature_id', 2)->take(5)->get();
         $recent = new PostsResource($post->publish()->with(['category', 'image'])->take(10)->get());
         $news_sains = $post->publish()->with(['category', 'image'])->where('category_id', 1)->take(4)->get();
         $makanan = $post->publish()->with(['category', 'image'])->where('category_id', 2)->take(10)->get();
@@ -64,7 +64,7 @@ class HomeController extends Controller
         return view('index', [
             'recent' => $recent,
             'headline' => $headline,
-            'breakingNews' => $breakingNews,
+            'editor_choice' => $editor_choice,
             'categories' => $categories,
             'popular' => $popular,
             'menu' => $menu

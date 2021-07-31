@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class BreakingNews extends Component
 {
     public $posts = [];
+    public $name = '';
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($posts)
+    public function __construct($posts, $name = '')
     {
         $this->posts = $posts;
+        $this->name = $name;
     }
 
     /**
