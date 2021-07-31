@@ -5,7 +5,7 @@
     @push('head')
     <meta name="description" content="Search">
     <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-    <meta name="author" content="hulanesia">
+    <meta name="author" content="Wehealth">
     <meta property="og:title" content="Search {{ $word }}">
     <meta property="og:description" content="Search">
     <meta property="og:image" content="{{ Request::url() }}/favicon.ico">

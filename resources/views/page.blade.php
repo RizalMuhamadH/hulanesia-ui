@@ -1,11 +1,11 @@
 <x-layouts.app>
     @push('title')
-        <title>Hulanesia - {{ $setting->name }}</title>
+        <title>Wehealth - {{ $setting->name }}</title>
     @endpush
     @push('head')
     <meta name="description" content="{{ $setting->meta_description ?? $setting->name }}">
     <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-    <meta name="author" content="hulanesia">
+    <meta name="author" content="Wehealth">
     <meta property="og:title" content="{{ $setting->name }}">
     <meta property="og:description" content="{{ $setting->meta_description ?? $setting->name }}">
     <meta property="og:image" content="{{ Request::url() }}/favicon.ico">

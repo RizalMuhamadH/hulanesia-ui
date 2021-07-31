@@ -1,15 +1,15 @@
 <x-layouts.app>
     @push('title')
-        <title>Hulanesia</title>
+        <title>Wehealth</title>
     @endpush
     @push('head')
-        <meta name="description" content="Hulanesia">
+        <meta name="description" content="Wehealth">
         <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-        <meta name="author" content="hulanesia">
-        <meta property="og:title" content="Hulanesia">
-        <meta property="og:description" content="hulanesia">
+        <meta name="author" content="wehealth">
+        <meta property="og:title" content="Wehealth">
+        <meta property="og:description" content="wehealth">
         <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
-        <meta property="og:site_name" content="Hulanesia">
+        <meta property="og:site_name" content="Wehealth">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>

@@ -1,6 +1,6 @@
 <x-layouts.app>
     @push('title')
-    <title>Hulanesia - {{ $category->name }}</title>
+    <title>Wehealth - {{ $category->name }}</title>
     @endpush
     @push('head')
     <meta name="description" content="{{ $category->name }}">
