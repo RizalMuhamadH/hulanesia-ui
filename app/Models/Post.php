@@ -6,11 +6,13 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Post extends Model implements Viewable
 {
     use HasFactory;
     use InteractsWithViews;
+    use Searchable;
 
     protected $fillable = [
         'title',
