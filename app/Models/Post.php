@@ -35,6 +35,18 @@ class Post extends Model implements Viewable
     
     protected $guarded = [];
 
+    const SEARCHABLE_FIELDS = ['id', 'title', 'description'];
+
+    public function shouldBeSearchable()
+    {
+        return $this->status === 'PUBLISH';
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only(self::SEARCHABLE_FIELDS);
+    }
+
     public function publish()
     {
         return $this->where('status', 'PUBLISH')->orderBy('created_at', 'DESC');

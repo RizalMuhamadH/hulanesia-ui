@@ -14,7 +14,7 @@ class SearchController extends Controller
         $word = $request->word;
 
         $post = new Post();
-        $posts = $post->publish()->with(['category', 'image'])->where('title', 'like', '%'.$request->word.'%')->take(20)->get();
+        $posts = Post::search($word)->orderBy('created_at', 'DESC')->take(20)->get();
         
         $popular = $post->publish()->orderByViews('desc', Period::pastDays(7))->take(5)->get();
         
