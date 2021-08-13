@@ -14,6 +14,9 @@ class SearchController extends Controller
         $word = $request->word;
 
         $post = new Post();
+        // $posts = Post::search($word, function($data, $word, $options){
+        //     return $data->search($word, ["filters"=>"feature_id = 1"]);
+        // })->orderBy('created_at', 'DESC')->take(20)->get();
         $posts = Post::search($word)->orderBy('created_at', 'DESC')->take(20)->get();
         
         $popular = $post->publish()->orderByViews('desc', Period::pastDays(7))->take(5)->get();
