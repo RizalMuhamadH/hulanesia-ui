@@ -47,10 +47,15 @@ class Post extends Model implements Viewable
         return $this->only(self::SEARCHABLE_FIELDS);
     }
 
-    public function publish()
+    public function scopePublish($query)
     {
-        return $this->where('status', 'PUBLISH')->orderBy('created_at', 'DESC');
+        return $query->where('status', 'PUBLISH')->orderBy('created_at', 'DESC');
     }
+
+    // public function publish()
+    // {
+    //     return $this->where('status', 'PUBLISH')->orderBy('created_at', 'DESC');
+    // }
     public function user()
     {
         return $this->belongsTo(User::class);

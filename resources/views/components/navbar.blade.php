@@ -1,4 +1,4 @@
-<nav class="bg-gray-800" x-data="{
+<nav class="bg-gray-800 sticky top-0 z-50" x-data="{
     open: false,
     get isOpen() { return this.open },
     toggle() { this.open = ! this.open },
@@ -45,6 +45,8 @@
                         src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
                         alt="Workflow">
                 </div> --}}
+
+                {{-- {{ dd($menu->hits) }} --}}
                 <div class="hidden sm:block sm:ml-6">
                     <div class="flex space-x-4">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
@@ -52,9 +54,9 @@
                             class="px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
                             aria-current="page">Home</a>
 
-                        @foreach ($menu as $item)
-                            <a href="{{ route('category', $item->slug) }}"
-                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item->slug ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item->name }}</a>
+                        @foreach ($menu['hits'] as $item)
+                            <a href="{{ route('category', $item['slug']) }}"
+                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['name'] }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -86,9 +88,9 @@
                 class="block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
                 aria-current="page">Home</a>
 
-            @foreach ($menu as $item)
-                <a href="{{ route('category', $item->slug) }}"
-                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item->slug ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item->name }}</a>
+            @foreach ($menu['hits'] as $item)
+                <a href="{{ route('category', $item['slug']) }}"
+                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['name'] }}</a>
             @endforeach
 
             <form action="{{ route('search') }}" method="GET" role="search">

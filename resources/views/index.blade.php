@@ -17,8 +17,15 @@
     <x-slot name="content">
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
-                <x-headline :headline="$headline"></x-headline>
-                <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news>
+                <div class="lg:w-2/3 w-full flex flex-col space-y-10">
+                    <x-headline :headline="$headline"></x-headline>
+                    <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news>
+                </div>
+                <div class="lg:w-1/3 w-full px-4">
+                    <x-popular-news :posts="$popular"></x-popular-news>
+                    <!-- popular-wrapper -->
+                </div>
+                {{-- <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news> --}}
             </div>
         </div>
         <div class="container mx-auto">
@@ -26,24 +33,24 @@
             <div class="flex flex-wrap">
 
                 <div class="lg:w-2/3 w-full">
-                    <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news>
+                    {{-- <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news> --}}
                 </div>
 
 
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
 
             </div>
 
-            @foreach ($categories as $item)
+            {{-- @foreach ($categories as $item)
                 @if (count($item['data']) == 4)
                     <x-category-news :posts="$item['data']" :name="$item['name']"></x-category-news>
                 @else
                     <x-collection-news :posts="$item['data']" :name="$item['name']"></x-collection-news>
                 @endif
-            @endforeach
+            @endforeach --}}
 
             {{-- <x-category-news :posts="$news_sains" :name="'News dan Sains'"></x-category-news>
 
