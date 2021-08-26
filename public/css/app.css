@@ -548,9 +548,6 @@ video {
 .visible{
 	visibility: visible;
 }
-.invisible{
-	visibility: hidden;
-}
 .fixed{
 	position: fixed;
 }
@@ -579,20 +576,8 @@ video {
 .left-0{
 	left: 0px;
 }
-.top-2{
-	top: 0.5rem;
-}
-.top-10{
-	top: 2.5rem;
-}
 .top-20{
 	top: 5rem;
-}
-.top-48{
-	top: 12rem;
-}
-.top-6{
-	top: 1.5rem;
 }
 .z-20{
 	z-index: 20;
@@ -600,11 +585,11 @@ video {
 .z-10{
 	z-index: 10;
 }
-.z-0{
-	z-index: 0;
-}
 .z-50{
 	z-index: 50;
+}
+.z-0{
+	z-index: 0;
 }
 .order-2{
 	order: 2;
@@ -825,15 +810,6 @@ video {
 .w-10{
 	width: 2.5rem;
 }
-.w-24{
-	width: 6rem;
-}
-.w-40{
-	width: 10rem;
-}
-.w-32{
-	width: 8rem;
-}
 .max-w-6xl{
 	max-width: 72rem;
 }
@@ -881,6 +857,11 @@ video {
 .justify-between{
 	justify-content: space-between;
 }
+.space-y-10 > :not([hidden]) ~ :not([hidden]){
+	--tw-space-y-reverse: 0;
+	margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
+	margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
+}
 .space-x-4 > :not([hidden]) ~ :not([hidden]){
 	--tw-space-x-reverse: 0;
 	margin-right: calc(1rem * var(--tw-space-x-reverse));
@@ -890,16 +871,6 @@ video {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
 	margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
-}
-.space-y-5 > :not([hidden]) ~ :not([hidden]){
-	--tw-space-y-reverse: 0;
-	margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
-	margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
-}
-.space-y-10 > :not([hidden]) ~ :not([hidden]){
-	--tw-space-y-reverse: 0;
-	margin-top: calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));
-	margin-bottom: calc(2.5rem * var(--tw-space-y-reverse));
 }
 .self-center{
 	align-self: center;
@@ -1355,9 +1326,6 @@ video {
 	.sm\:flex-1{
 		flex: 1 1 0%;
 	}
-	.sm\:flex-row{
-		flex-direction: row;
-	}
 	.sm\:items-center{
 		align-items: center;
 	}
@@ -1388,9 +1356,6 @@ video {
 	}
 }
 @media (min-width: 768px){
-	.md\:visible{
-		visibility: visible;
-	}
 	.md\:order-1{
 		order: 1;
 	}
@@ -1421,17 +1386,11 @@ video {
 	.md\:h-100{
 		height: 32rem;
 	}
-	.md\:h-102{
-		height: 42rem;
-	}
 	.md\:h-101{
 		height: 36rem;
 	}
 	.md\:h-44{
 		height: 11rem;
-	}
-	.md\:h-80{
-		height: 20rem;
 	}
 	.md\:w-1\/5{
 		width: 20%;
@@ -1461,9 +1420,6 @@ video {
 		--tw-space-x-reverse: 0;
 		margin-right: calc(2rem * var(--tw-space-x-reverse));
 		margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-	}
-	.md\:overflow-visible{
-		overflow: visible;
 	}
 	.md\:rounded{
 		border-radius: 0.25rem;

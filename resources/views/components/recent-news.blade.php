@@ -8,12 +8,21 @@
         <div class="flex md:flex-wrap flex-row md:pr-5 pr-0 mb-10">
 
             <div class="sm:w-2/3 w-full md:mx-0 mx-2 md:order-1 order-2">
-                <span class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['category_name'] }}</span>
-                    <h2 class="text-normal font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2"><a href="{{ route('read', [$item['id'], Carbon\Carbon::parse( $item['created_at'])->format('dmY'), $item['slug']]) }}">{{ $item['title'] }}</a></h2>
+                <span
+                    class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['category_name'] }}</span>
+
+                <h2
+                    class="text-normal font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2">
+                    <a
+                        href="{{ route('read', [$item['id'], Carbon\Carbon::parse($item['created_at'])->format('dmY'), $item['slug']]) }}">{{ $item['title'] }}</a>
+                </h2>
+                @if (!Agent::isMobile())
                     <p class="text-gray-600 text-sm line-clamp-2 sm:block hidden">{{ $item['description'] }}</p>
-                    <div class="text-gray-700 mt-1">
-                        <span class="text-xs">{{ Carbon\Carbon::parse( $item['created_at'])->format('d M Y, H:m') }} WIB</span>
-                    </div>
+                @endif
+                <div class="text-gray-700 mt-1">
+                    <span class="text-xs">{{ Carbon\Carbon::parse($item['created_at'])->format('d M Y, H:m') }}
+                        WIB</span>
+                </div>
                 <!-- most-recent-item-info -->
             </div>
 
