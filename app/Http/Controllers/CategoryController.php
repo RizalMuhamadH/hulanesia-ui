@@ -4,24 +4,66 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
+use MeiliSearch\Client;
 
 class CategoryController extends Controller
 {
-    public function index(Category $category)
+    public function index($category)
     {
-        // dd($category);
-        $post = new Post();
-        $headline = $post->publish()->with(['category', 'image'])->where([
-            ['feature_id', 1],
-            ['category_id', $category->id]
-            ])->take(5)->get();
-        $categories = $post->publish()->with(['category', 'image'])->where('category_id', $category->id)->paginate(15);
+        $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
 
-        $popular = $post->publish()->orderByViews('desc', Period::pastDays(7))->take(5)->get();
-        
-        $menu = Category::where('order', '<>', 0)->orderBy('order', 'ASC')->get();
+        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND category_slug = '.$category, 'attributesToRetrieve' => [
+            'id',
+            'title',
+            'slug',
+            'description',
+            'feature_id',
+            'category_id',
+            'category_name',
+            'user_id',
+            'user',
+            'status',
+            'image',
+            'created_at',
+            'timestamp'
+        ]])->getRaw();
+
+        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND category_slug = '.$category, 'attributesToRetrieve' => [
+            'id',
+            'title',
+            'slug',
+            'description',
+            'feature_id',
+            'category_id',
+            'category_name',
+            'user_id',
+            'user',
+            'status',
+            'image',
+            'created_at',
+            'timestamp'
+        ]])->getRaw();
+
+        $popular =$client->index('post-popular')->search('', ['limit' => 5, 'filters' => 'period = '.Carbon::now()->format('mY'), 'attributesToRetrieve' => [
+            'id',
+            'title',
+            'slug',
+            'description',
+            'feature_id',
+            'category_id',
+            'category_name',
+            'user_id',
+            'user',
+            'status',
+            'image',
+            'created_at',
+            'timestamp'
+        ]])->getRaw();
+
+        $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
         return view('category', compact(['headline', 'categories', 'popular', 'category', 'menu']));
     }
