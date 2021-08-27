@@ -17,3 +17,8 @@ mix.js('resources/js/app.js', 'public/js')
     ])
     .postCss('resources/css/swiper/6.7.0/swiper-bundle.min.css', 'public/css/swiper/6.7.0/swiper-bundle.min.css');
 mix.babel('resources/js/swiper/6.7.0/swiper-bundle.min.js', 'public/js/swiper/6.7.0/swiper-bundle.min.js')
+
+mix.copy(
+    "resources/js/flicking/flicking-plugins-all.min.js",
+    "public/js/flicking/flicking-plugins-all.min.js"
+);
