@@ -26,26 +26,29 @@
 
     <script src="https://unpkg.com/@egjs/flicking@4.0.0-beta.4/dist/flicking.pkgd.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking@4.0.0/dist/flicking.css">
-    <script type="module" src="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/plugins.min.js"></script>
-    <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/flicking-plugins.css">
+    <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/arrow.min.css">
+    {{-- <script type="module" src="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/plugins.min.js"></script>
+    <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/flicking-plugins.css"> --}}
 
     <script src="{{ asset('js/swiper/6.7.0/swiper-bundle.min.js') }}"></script>
-    <script src="{{ mix('js/app.js') }}" defer></script>
     {{-- <script defer src="https://unpkg.com/alpinejs@3.1.0/dist/cdn.min.js"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script> --}}
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
 </head>
 
-<body class="font-poppins ">
-    {{ $nav }}
-    <div class="w-full md:grid flex md:grid-cols-12 grid-cols-none">
-        <div class="w-full col-span-8 col-start-3">
-            {{ $content }}
+<body>
+    <div id="app" class="font-poppins w-full">
+        {{ $nav }}
+        <div class="w-full md:grid flex md:grid-cols-12 grid-cols-none">
+            <div class="w-full col-span-8 col-start-3">
+                <editor-choice></editor-choice>
+                {{ $content }}
+            </div>
         </div>
+        <x-footer></x-footer>
     </div>
-    <x-footer></x-footer>
 
     @stack('script')
-    
+
 </body>
 
 </html>

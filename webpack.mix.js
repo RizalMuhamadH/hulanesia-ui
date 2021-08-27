@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,14 +11,23 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        require("tailwindcss"),
-    ])
-    .postCss('resources/css/swiper/6.7.0/swiper-bundle.min.css', 'public/css/swiper/6.7.0/swiper-bundle.min.css');
-mix.babel('resources/js/swiper/6.7.0/swiper-bundle.min.js', 'public/js/swiper/6.7.0/swiper-bundle.min.js')
+mix.js("resources/js/app.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [require("tailwindcss")])
+    .postCss(
+        "resources/css/swiper/6.7.0/swiper-bundle.min.css",
+        "public/css/swiper/6.7.0/swiper-bundle.min.css"
+    );
+mix.babel(
+    "resources/js/swiper/6.7.0/swiper-bundle.min.js",
+    "public/js/swiper/6.7.0/swiper-bundle.min.js"
+);
 
-mix.copy(
-    "resources/js/flicking/flicking-plugins-all.min.js",
-    "public/js/flicking/flicking-plugins-all.min.js"
+mix.js(
+    "resources/js/flicking/flicking.js",
+    "public/js/flicking/flicking.js"
+);
+
+mix.js(
+    "resources/js/flicking/flicking-mobile.js",
+    "public/js/flicking/flicking-mobile.js"
 );

@@ -840,9 +840,6 @@ video {
 .cursor-default{
 	cursor: default;
 }
-.cursor-pointer{
-	cursor: pointer;
-}
 .resize{
 	resize: both;
 }
@@ -1170,10 +1167,6 @@ video {
 .text-teal-400{
 	--tw-text-opacity: 1;
 	color: rgba(22, 189, 202, var(--tw-text-opacity));
-}
-.text-yellow-500{
-	--tw-text-opacity: 1;
-	color: rgba(245, 158, 11, var(--tw-text-opacity));
 }
 .underline{
 	text-decoration: underline;
