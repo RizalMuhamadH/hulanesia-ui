@@ -12,7 +12,7 @@
                     class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['category_name'] }}</span>
 
                 <h2
-                    class="text-normal font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2">
+                    class="md:text-lg text-sm font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2">
                     <a
                         href="{{ route('read', [$item['id'], Carbon\Carbon::parse($item['created_at'])->format('dmY'), $item['slug']]) }}">{{ $item['title'] }}</a>
                 </h2>

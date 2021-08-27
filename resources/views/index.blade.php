@@ -19,6 +19,7 @@
             <div class="flex flex-wrap">
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
                     <x-headline :headline="$headline"></x-headline>
+                    <x-editor-choice :posts="$editorChoice"></x-editor-choice>
                     <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
