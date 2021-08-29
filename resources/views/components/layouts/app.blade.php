@@ -27,8 +27,9 @@
     <link rel="stylesheet" href="https://unpkg.com/@egjs/flicking@4.0.0/dist/flicking.css">
     <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/arrow.min.css">
     <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/pagination.min.css">
-
+    @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+
 </head>
 
 <body>
@@ -43,6 +44,7 @@
     </div>
 
     @stack('script')
+    @livewireScripts
 
 </body>
 
