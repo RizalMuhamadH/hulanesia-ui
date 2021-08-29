@@ -1,6 +1,26 @@
 import { Arrow } from "@egjs/flicking-plugins";
 
-const flicking = new Flicking("#editor-choice", { circular: true, horizontal: true, align: "center", autoResize: true });
+var docEditor = document.getElementById("editor-choice");
+var docHeadline = document.getElementById("headline");
 
-flicking.addPlugins(new Arrow());
+if (docEditor) {
+    const editor = new Flicking("#editor-choice", {
+        circular: true,
+        horizontal: true,
+        align: "center",
+        autoResize: true,
+    });
 
+    editor.addPlugins(new Arrow());
+}
+
+if (docHeadline) {
+    const headline = new Flicking("#headline", {
+        circular: true,
+        horizontal: true,
+        align: "center",
+        autoResize: true,
+    });
+
+    headline.addPlugins(new Arrow());
+}

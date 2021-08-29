@@ -1,7 +1,35 @@
-import { AutoPlay } from "@egjs/flicking-plugins";
+import { AutoPlay, Fade, Pagination } from "@egjs/flicking-plugins";
 
-const flicking = new Flicking("#editor-choice", { circular: true, horizontal: true, align: "center", autoResize: true, duration: 500 });
+var docEditor = document.getElementById("editor-choice");
+var docHeadline = document.getElementById("headline");
 
-flicking.addPlugins(new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false }));
+if (docEditor) {
+    const editor = new Flicking("#editor-choice", {
+        circular: true,
+        horizontal: true,
+        align: "center",
+        autoResize: true,
+        duration: 500,
+    });
 
+    editor.addPlugins(
+        new AutoPlay({ duration: 2000, direction: "NEXT", stopOnHover: false })
+    );
+}
 
+if (docHeadline) {
+    const headline = new Flicking("#headline", {
+        circular: true,
+        horizontal: true,
+        align: "center",
+        autoResize: true,
+        duration: 500,
+    });
+
+    headline.addPlugins(
+        new Fade(),
+        new Pagination({
+            type: "bullet",
+        })
+    );
+}

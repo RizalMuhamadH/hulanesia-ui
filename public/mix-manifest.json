@@ -2,7 +2,5 @@
     "/js/app.js": "/js/app.js",
     "/js/flicking/flicking.js": "/js/flicking/flicking.js",
     "/js/flicking/flicking-mobile.js": "/js/flicking/flicking-mobile.js",
-    "/css/app.css": "/css/app.css",
-    "/css/swiper/6.7.0/swiper-bundle.min.css": "/css/swiper/6.7.0/swiper-bundle.min.css",
-    "/js/swiper/6.7.0/swiper-bundle.min.js": "/js/swiper/6.7.0/swiper-bundle.min.js"
+    "/css/app.css": "/css/app.css"
 }

@@ -7,7 +7,7 @@
     @foreach ($posts['hits'] as $item)
         <div class="flex md:flex-wrap flex-row md:pr-5 pr-0 mb-10">
 
-            <div class="sm:w-2/3 w-full md:mx-0 mx-2 md:order-1 order-2">
+            <div class="w-2/3 md:mx-0 mx-2 md:order-1 order-2">
                 <span
                     class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['category_name'] }}</span>
 
@@ -26,8 +26,10 @@
                 <!-- most-recent-item-info -->
             </div>
 
-            <img class="sm:w-1/3 h-auto md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded overflow-hidden md:order-2 order-1"
-                src="/storage/{{ $item['image']['media']['small'] ?? '' }}" alt="{{ $item['title'] }}">
+            {{-- <img class="sm:w-1/3 h-auto md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded overflow-hidden md:order-2 order-1"
+                src="/storage/{{ $item['image']['media']['small'] ?? '' }}" alt="{{ $item['title'] }}"> --}}
+            <img class="w-1/3 h-24 md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded-lg overflow-hidden md:order-2 order-1"
+                src="https://picsum.photos/seed/picsum/200/300">
 
         </div>
     @endforeach

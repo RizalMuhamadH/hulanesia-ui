@@ -11,11 +11,11 @@ use MeiliSearch\Client;
 
 class CategoryController extends Controller
 {
-    public function index($category)
+    public function index($slug)
     {
         $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
 
-        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND category_slug = '.$category, 'attributesToRetrieve' => [
+        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',
@@ -31,7 +31,7 @@ class CategoryController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND category_slug = '.$category, 'attributesToRetrieve' => [
+        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',
@@ -65,6 +65,12 @@ class CategoryController extends Controller
 
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
-        return view('category', compact(['headline', 'categories', 'popular', 'category', 'menu']));
+        $cat = $client->index('category')->search('', ['filters' => 'slug = '.$slug])->getRaw();
+
+        abort_if(count($cat['hits']) == 0, 404);
+
+        $category = $cat['hits'][0];
+
+        return view('category', compact(['headline', 'recent', 'popular', 'category', 'menu']));
     }
 }

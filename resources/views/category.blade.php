@@ -1,15 +1,15 @@
 <x-layouts.app>
     @push('title')
-    <title>Wehealth - {{ $category->name }}</title>
+        <title>Wehealth - {{ $category['name'] }}</title>
     @endpush
     @push('head')
-    <meta name="description" content="{{ $category->name }}">
-    <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-    <meta name="author" content="hulanesia">
-    <meta property="og:title" content="{{ $category->name }}">
-    <meta property="og:description" content="{{ $category->name }}">
-    <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
-    <meta property="og:site_name" content="{{ $category->name }}">
+        <meta name="description" content="{{ $category['name'] }}">
+        <meta name="keywords" content="{{ env('META_KEYWORD') }}">
+        <meta name="author" content="hulanesia">
+        <meta property="og:title" content="{{ $category['name'] }}">
+        <meta property="og:description" content="{{ $category['name'] }}">
+        <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
+        <meta property="og:site_name" content="{{ $category['name'] }}">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
@@ -17,25 +17,23 @@
     <x-slot name="content">
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
-                <x-header-category :posts="$headline" :name="$category->name"></x-header-category>
-            </div>
-        </div>
-        <div class="container mx-auto">
-    
-            <div class="flex flex-wrap">
-    
-                <div class="lg:w-2/3 w-full">
-                    <x-recent-news :posts="$categories" :name="''"></x-recent-news>
-
-                    {{ $categories->links('vendor.pagination.custom') }}
+                <div class="lg:w-2/3 w-full flex flex-col space-y-10">
+                    <x-headline :headline="$headline"></x-headline>
+                    <x-recent-news :posts="$recent" :name="$category['name']"></x-recent-news>
                 </div>
-    
                 <div class="lg:w-1/3 w-full px-4">
                     <x-popular-news :posts="$popular"></x-popular-news>
                     <!-- popular-wrapper -->
                 </div>
-    
             </div>
         </div>
+
+        @push('script')
+            @if (!Agent::isMobile())
+                <script src="{{ mix('js/flicking/flicking.js') }}"></script>
+            @else
+                <script src="{{ mix('js/flicking/flicking-mobile.js') }}"></script>
+            @endif
+        @endpush
     </x-slot>
 </x-layouts.app>

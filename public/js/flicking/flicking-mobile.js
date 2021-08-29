@@ -16422,18 +16422,36 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @egjs/flicking-plugins */ "./node_modules/@egjs/flicking-plugins/dist/plugins.esm.js");
 
-var flicking = new Flicking("#editor-choice", {
-  circular: true,
-  horizontal: true,
-  align: "center",
-  autoResize: true,
-  duration: 500
-});
-flicking.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.AutoPlay({
-  duration: 2000,
-  direction: "NEXT",
-  stopOnHover: false
-}));
+var docEditor = document.getElementById("editor-choice");
+var docHeadline = document.getElementById("headline");
+
+if (docEditor) {
+  var editor = new Flicking("#editor-choice", {
+    circular: true,
+    horizontal: true,
+    align: "center",
+    autoResize: true,
+    duration: 500
+  });
+  editor.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.AutoPlay({
+    duration: 2000,
+    direction: "NEXT",
+    stopOnHover: false
+  }));
+}
+
+if (docHeadline) {
+  var headline = new Flicking("#headline", {
+    circular: true,
+    horizontal: true,
+    align: "center",
+    autoResize: true,
+    duration: 500
+  });
+  headline.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Fade(), new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Pagination({
+    type: "bullet"
+  }));
+}
 })();
 
 /******/ })()

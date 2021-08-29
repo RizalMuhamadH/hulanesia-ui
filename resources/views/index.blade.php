@@ -67,5 +67,13 @@
 
             <x-category-news :posts="$otomotif" :name="'Otomotif'"></x-category-news> --}}
         </div>
+
+        @push('script')
+            @if (!Agent::isMobile())
+                <script src="{{ mix('js/flicking/flicking.js') }}"></script>
+            @else
+                <script src="{{ mix('js/flicking/flicking-mobile.js') }}"></script>
+            @endif
+        @endpush
     </x-slot>
 </x-layouts.app>
