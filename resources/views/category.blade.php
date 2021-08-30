@@ -19,8 +19,10 @@
             <div class="flex flex-wrap">
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
                     <x-headline :headline="$headline"></x-headline>
-                    <x-recent-news :posts="$recent" :name="$category['name']"></x-recent-news>
-                    <livewire:loadmore-category :category="$category['slug']"/>
+                    <div>
+                        <x-recent-news :posts="$recent" :name="$category['name']"></x-recent-news>
+                        <livewire:loadmore :initCount="count($recent['hits'])" :scaffold="'category'" :slug="$category['slug']"/>
+                    </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
                     <x-popular-news :posts="$popular"></x-popular-news>

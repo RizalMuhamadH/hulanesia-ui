@@ -16,7 +16,7 @@ class TagController extends Controller
     {
         $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
 
-        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH', 'attributesToRetrieve' => [
+        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND tags_slug = '.$slug, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',
@@ -32,7 +32,7 @@ class TagController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $posts = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH', 'attributesToRetrieve' => [
+        $posts = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND tags_slug = '.$slug, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',
@@ -64,10 +64,14 @@ class TagController extends Controller
             'timestamp'
         ]])->getRaw();
         
-        $tag = $client->index('tag')->search('', ['filters' => 'slug = '.$slug])->getRaw();
+        $data = $client->index('tag')->search('', ['filters' => 'slug = '.$slug])->getRaw();
+
+        abort_if(count($data['hits']) == 0, 404);
+
+        $tag = $data['hits'][0];
 
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
-        return view('tag', compact(['tag', 'posts', 'popular', 'menu']));
+        return view('tag', compact(['headline' ,'tag', 'posts', 'popular', 'menu']));
     }
 }

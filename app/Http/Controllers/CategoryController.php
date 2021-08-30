@@ -31,7 +31,7 @@ class CategoryController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $recent = $client->index('post')->search('', ['limit' => 4, 'filters' => 'status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
+        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',
