@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReadController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +26,5 @@ Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('cate
 Route::get('/tag/{slug}', [TagController::class, 'index'])->name('tag');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/page/{setting:slug}', [PageController::class, 'index'])->name('page');
+Route::get('/photo', [PhotoController::class, 'index'])->name('index');
+Route::get('/photo/detail/{id}/{date}/{slug}', [PhotoController::class, 'index'])->name('photo');
