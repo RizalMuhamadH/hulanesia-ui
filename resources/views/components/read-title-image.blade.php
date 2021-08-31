@@ -19,7 +19,7 @@
                 </svg>
             </li> --}}
             <li class="inline-flex items-center">
-                <a href="{{ route('category', $post->category->slug) }}" class="text-teal-400">{{ $post->category->name }}</a>
+                <a href="{{ route('category', $post['category_slug']) }}" class="text-teal-400">{{ $post['category_name'] }}</a>
             </li>
         </ul>
     </div>
@@ -27,27 +27,27 @@
 
 
     <div class="md:my-5 md:w-3/4 w-full mx-auto">
-        <h1 class="md:text-4xl text-xl font-bold text-gray-900 md:mx-0 mx-6">{{ $post->title }}</h1>
+        <h1 class="md:text-4xl text-xl font-bold text-gray-900 md:mx-0 mx-6">{{ $post['title'] }}</h1>
 
         <div class="flex mt-3 md:mx-0 md:mb-0 mx-6 mb-6">
-            <div class="w-auto">
+            {{-- <div class="w-auto">
                 <div class="w-10 h-10 rounded-full overflow-hidden">
-                    <img src="/storage/{{ $post->user->image->thumbnail('small', 'path') }}" class="object-cover w-10 h-10" alt="author pic">
+                    <img src="/storage/{{ $post['image']['media']['small'] }}" class="object-cover w-10 h-10" alt="{{ $post['title'] }}">
                 </div>
-            </div>
-            <div class="w-full text-xs pl-4 pt-px">
-                <div class="text-gray-600"> {{ $post->user->name }}
+            </div> --}}
+            <div class="w-full text-xs pt-px">
+                <div class="text-gray-600"> {{ $post['author'] ?? '' }}
                 </div>
-                <div class="text-gray-600"> <span>{{ $post->created_at->format('d M Y, H:m') }} WIB</span> </div>
+                <div class="text-gray-600"> <span>{{ Carbon\Carbon::parse($post['created_at'])->format('d M Y, H:m') }} WIB</span> </div>
             </div>
         </div>
         <!-- author-info -->
 
     </div>
-    <div class="md:rounded overflow-hidden shadow-2xl lg:w-3/4 w-full md:h-101 h-full mb-10 self-center">
-        <img src="/storage/{{ $post->image->thumbnail('medium') ?? '' }}" alt="{{ $post->title }}" class="object-cover w-full">
+    <div class="md:rounded-lg overflow-hidden shadow-2xl w-full md:h-101 h-full mb-10 self-center">
+        <img src="/storage/{{ $post['image']['media']['small'] ?? '' }}" alt="{{ $post['title'] }}" class="object-cover w-full">
     </div>
-    <p class="text-center text-sm md:mb-12 mb-5">
-        {{ $post->image->caption ?? '' }}
+    <p class="text-center text-sm ">
+        {{ $post['image']['caption'] ?? '' }}
     </p>
 </div>

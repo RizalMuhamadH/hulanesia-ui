@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/post/read/{post:id}/{date}/{slug}', [ReadController::class, 'index'])->name('read');
+Route::get('/post/detail/{id}/{date}/{slug}', [ReadController::class, 'index'])->name('read');
 Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('category');
 Route::get('/tag/{slug}', [TagController::class, 'index'])->name('tag');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
