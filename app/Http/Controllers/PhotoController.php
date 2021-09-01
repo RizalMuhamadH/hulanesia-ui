@@ -83,6 +83,6 @@ class PhotoController extends Controller
 
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
-        return view('photo-read', compact(['photo', 'recent', 'popular', 'menu']));
+        return view('detail-photo', compact(['photo', 'recent', 'popular', 'menu']));
     }
 }
