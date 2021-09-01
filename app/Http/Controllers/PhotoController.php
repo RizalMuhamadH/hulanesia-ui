@@ -54,7 +54,7 @@ class PhotoController extends Controller
 
         $photo = $data['hits'][0];
 
-        $recent = $client->index('photo')->search('', ['limit' => 20, 'attributesToRetrieve' => [
+        $recent = $client->index('photo')->search('', ['limit' => 12, 'attributesToRetrieve' => [
             'id',
             'title',
             'slug',

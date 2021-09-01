@@ -21,7 +21,9 @@
                     <x-headline :headline="$headline"></x-headline>
                     <div>
                         <x-recent-news :posts="$posts" :name="$tag['name']"></x-recent-news>
+                        @if (count($posts['hits']) == 20)
                         <livewire:loadmore :initCount="count($posts['hits'])" :scaffold="'tag'" :slug="$tag['slug']"/>
+                        @endif
                     </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">

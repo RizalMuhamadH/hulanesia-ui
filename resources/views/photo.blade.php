@@ -19,6 +19,9 @@
             <div class="flex flex-wrap">
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
                     <x-collection-photo :name="'Photo'" :photos="$recent"></x-collection-photo>
+                    @if (count($recent['hits']) == 20)
+                        <livewire:loadmore :initCount="count($recent['hits'])" :scaffold="'photo'"/>
+                    @endif
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
                     <x-popular-news :posts="$popular"></x-popular-news>
