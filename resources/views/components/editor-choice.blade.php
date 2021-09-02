@@ -1,5 +1,5 @@
 <div class="w-full">
-    <div class="flex flex-wrap text-gray-900 mb-6">
+    <div class="flex flex-wrap text-gray-900 mb-6 md:mx-0 mx-2">
         <h3 class="text-2xl font-semibold">Editor Choice</h3>
     </div>
     <div id="editor-choice" class="flicking-viewport">

@@ -1,6 +1,6 @@
 <div>
 
-    <div class="flex flex-wrap text-gray-900 mb-6">
+    <div class="flex flex-wrap text-gray-900 mb-6 md:mx-0 mx-2">
         <h3 class="text-2xl font-semibold">{!! $name !!}</h3>
     </div>
 

@@ -1,6 +1,6 @@
 <div>
 
-    <div class="container mx-auto">
+    <div class="container md:mx-auto mx-2">
         <h3 class="text-2xl font-semibold p-5 pl-0">{{ $name }}</h3>
     </div>
 

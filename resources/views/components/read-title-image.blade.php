@@ -1,6 +1,6 @@
 <div class="container mx-auto flex flex-col">
 
-    <div class="md:my-5 my-4 md:w-3/4 w-full md:mx-auto mx-3">
+    <div class="md:my-5 my-4 md:w-3/4 md:mx-auto mx-3">
         <ul class="flex text-gray-500 text-sm lg:text-base">
             <li class="inline-flex items-center">
                 <a href="/" class="hover:text-teal-400">Home</a>
