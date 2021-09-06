@@ -13,9 +13,8 @@ class PageController extends Controller
     public function index(Setting $setting)
     {
         $post = new Post();
-        $popular = $post->publish()->orderByViews('desc', Period::pastDays(7))->take(5)->get();
         $menu = Category::where('order', '<>', 0)->orderBy('order', 'ASC')->get();
 
-        return view('page', compact(['setting', 'popular', 'menu']));
+        return view('page', compact(['setting', 'menu']));
     }
 }

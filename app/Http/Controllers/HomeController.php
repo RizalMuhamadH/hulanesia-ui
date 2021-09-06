@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Collection;
 use MeiliSearch\Client;
-use Spatie\Analytics\Analytics;
+use Analytics;
 use Spatie\Analytics\Period;
 
 class HomeController extends Controller
@@ -67,31 +67,14 @@ class HomeController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $popular =$client->index('post-popular')->search('', ['limit' => 5, 'filters' => 'period = '.Carbon::now()->format('mY'), 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
-
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
-        $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
+        // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
 
         return view('index', [
             'recent' => $recent,
             'headline' => $headline,
             'editorChoice' => $editor_choice,
-            'popular' => $popular,
             'menu' => $menu
         ]);
 

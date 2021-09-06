@@ -177,6 +177,8 @@ return [
         CyrildeWit\EloquentViewable\EloquentViewableServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Spatie\Analytics\AnalyticsServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
 
     ],
 
@@ -232,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
     ],
 
 ];

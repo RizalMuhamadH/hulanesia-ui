@@ -47,22 +47,6 @@ class CategoryController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $popular =$client->index('post-popular')->search('', ['limit' => 5, 'filters' => 'period = '.Carbon::now()->format('mY'), 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
-
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
         $cat = $client->index('category')->search('', ['filters' => 'slug = '.$slug])->getRaw();
@@ -71,6 +55,6 @@ class CategoryController extends Controller
 
         $category = $cat['hits'][0];
 
-        return view('category', compact(['headline', 'recent', 'popular', 'category', 'menu']));
+        return view('category', compact(['headline', 'recent', 'category', 'menu']));
     }
 }

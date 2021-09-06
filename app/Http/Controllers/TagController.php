@@ -48,21 +48,6 @@ class TagController extends Controller
             'timestamp'
         ]])->getRaw();
 
-        $popular =$client->index('post-popular')->search('', ['limit' => 5, 'filters' => 'period = '.Carbon::now()->format('mY'), 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
         
         $data = $client->index('tag')->search('', ['filters' => 'slug = '.$slug])->getRaw();
 
@@ -72,6 +57,6 @@ class TagController extends Controller
 
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
-        return view('tag', compact(['headline' ,'tag', 'posts', 'popular', 'menu']));
+        return view('tag', compact(['headline' ,'tag', 'posts', 'menu']));
     }
 }
