@@ -67,6 +67,17 @@ class HomeController extends Controller
             'timestamp'
         ]])->getRaw();
 
+        $photos = $client->index('photo')->search('', ['limit' => 4, 'attributesToRetrieve' => [
+            'id',
+            'title',
+            'slug',
+            'user_id',
+            'user_name',
+            'images',
+            'created_at',
+            'timestamp'
+        ]])->getRaw();
+
         $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
 
         // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
@@ -75,7 +86,8 @@ class HomeController extends Controller
             'recent' => $recent,
             'headline' => $headline,
             'editorChoice' => $editor_choice,
-            'menu' => $menu
+            'menu' => $menu,
+            'photos' => $photos
         ]);
 
         // return view('index')->with([]);

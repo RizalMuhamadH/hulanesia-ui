@@ -21,11 +21,14 @@
                     <x-headline :headline="$headline"></x-headline>
                     <x-editor-choice :posts="$editorChoice"></x-editor-choice>
                     <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news>
+                    
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
                     <x-popular-news :posts="$popular"></x-popular-news>
                     <!-- popular-wrapper -->
                 </div>
+
+                <x-recent-photo :photos="$photos"></x-recent-photo>
                 {{-- <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news> --}}
             </div>
         </div>
