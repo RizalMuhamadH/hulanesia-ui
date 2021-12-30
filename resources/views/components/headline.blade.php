@@ -10,10 +10,10 @@
                         <div class="absolute z-20 bottom-0 left-0 flex flex-col px-3 py-3">
                             <h1 class="font-medium text-white md:text-2xl text-lg line-clamp-2">
                                 <a
-                                    href="{{ route('read', [$item['id'], Carbon\Carbon::parse($item['created_at'])->format('dmY'), $item['slug']]) }}">{{ $item['title'] }}</a>
+                                    href="{{ route('read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">{{ $item['_source']['title'] }}</a>
                             </h1>
                             <div class="text-white text-xs py-2">
-                                {{ Carbon\Carbon::parse($item['created_at'])->format('d M Y, H:m') }} WIB
+                                {{ Carbon\Carbon::parse($item['_source']['created_at'])->format('d M Y, H:m') }} WIB
                             </div>
                         </div>
 

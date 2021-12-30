@@ -12,15 +12,15 @@
                         alt="{{ $item['image']['caption'] }}" /> --}}
                     <img src="https://picsum.photos/seed/picsum/200/300"
                         class="shadow rounded w-1/3 h-auto align-middle border-none"
-                        alt="{{ $item['image']['caption'] }}" />
+                        alt="{{ $item['_source']['image']['caption'] ?? '' }}" />
                     <div class="flex flex-col w-2/3">
                         <div class="text-black text-xs py-2">
-                            <span class="text-green-700 font-bold">{{ $item['category_name'] }}</span> 
+                            <span class="text-green-700 font-bold">{{ $item['_source']['category']['name'] }}</span> 
                         </div>
                         <p class="font-bold text-black text-xs md:line-clamp-2 line-clamp-3">
-                            {{ $item['title'] }}
+                            {{ $item['_source']['title'] }}
                         </p>
-                        <span class="text-gray-400 text-xs">{{ Carbon\Carbon::parse($item['created_at'])->format('d M Y, H:m') }}</span>
+                        <span class="text-gray-400 text-xs">{{ Carbon\Carbon::parse($item['_source']['created_at'])->format('d M Y, H:m') }}</span>
                     </div>
                 </a>
             @endforeach

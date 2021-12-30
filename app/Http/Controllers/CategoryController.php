@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
@@ -11,50 +12,94 @@ use MeiliSearch\Client;
 
 class CategoryController extends Controller
 {
+    private $repository;
+
+    public function __construct(Elasticsearch $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index($slug)
     {
-        $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
+        $headline = $this->repository->get('article', [
+            'from'      => 0,
+            'size'      => 5,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'feature.id' => 1
+                ],
+                'match' => [
+                    'status' => 'PUBLISH'
+                ],
+                'match' => [
+                    'category.slug' => $slug
+                ]
+            ]
+        ]);
 
-        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $recent = $this->repository->get('article', [
+            'from'      => 0,
+            'size'      => 20,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'status' => 'PUBLISH'
+                ],
+                'match' => [
+                    'category.slug' => $slug
+                ]
+            ]
+        ]);
 
-        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND category_slug = '.$slug, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $menu = $this->repository->get('category', [
+            'sort'      => [
+                [
+                    'order' => [
+                        'order' => 'asc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'present' => 1
+                ]
+            ]
+        ]);
 
-        $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
+        $cat = $this->repository->get('category', [
+            'query'     => [
+                'match' => [
+                    'slug' => $slug
+                ]
+            ]
+        ]);
 
-        $cat = $client->index('category')->search('', ['filters' => 'slug = '.$slug])->getRaw();
 
-        abort_if(count($cat['hits']) == 0, 404);
+        $category = parse_json($cat);
 
-        $category = $cat['hits'][0];
+        abort_if(count($category['hits']) == 0, 404);
 
-        return view('category', compact(['headline', 'recent', 'category', 'menu']));
+
+        return view('category', [
+            'headline'      => parse_json($headline),
+            'category'      => $category['hits'][0],
+            'recent'        => parse_json($recent),
+            'menu'          => parse_json($menu)
+        ]);
     }
 }

@@ -55,8 +55,8 @@
                             aria-current="page">Home</a>
 
                         @foreach ($menu['hits'] as $item)
-                            <a href="{{ route('category', $item['slug']) }}"
-                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['name'] }}</a>
+                            <a href="{{ route('category', $item['_source']['slug']) }}"
+                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item['_source']['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
                         @endforeach
                     </div>
                 </div>
@@ -89,8 +89,8 @@
                 aria-current="page">Home</a>
 
             @foreach ($menu['hits'] as $item)
-                <a href="{{ route('category', $item['slug']) }}"
-                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['name'] }}</a>
+                <a href="{{ route('category', $item['_source']['slug']) }}"
+                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item['_source']['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
             @endforeach
 
             <form action="{{ route('search') }}" method="GET" role="search">

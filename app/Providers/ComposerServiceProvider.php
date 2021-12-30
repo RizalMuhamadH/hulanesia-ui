@@ -12,7 +12,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         // Using class based composers...
         View::composer(
-            ['index', 'category', 'detail-photo', 'page', 'photo', 'read', 'search', 'tag'], PopularityComposer::class
+            [''], PopularityComposer::class
         );
     }
 

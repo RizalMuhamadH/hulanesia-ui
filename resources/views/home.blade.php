@@ -20,11 +20,11 @@
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
                     <x-headline :headline="$headline"></x-headline>
                     <x-editor-choice :posts="$editorChoice"></x-editor-choice>
-                    <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news>
+                    <x-recent-news :posts="$recent[0]" :name="'Most Recent'"></x-recent-news>
                     
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
 
@@ -37,7 +37,9 @@
             <div class="flex flex-wrap">
 
                 <div class="lg:w-2/3 w-full">
-                    {{-- <x-recent-news :posts="$recent" :name="'Most Recent'"></x-recent-news> --}}
+                    @if (isset($recent[1]))
+                    <x-recent-news :posts="$recent[1]" :name="'Most Recent'"></x-recent-news>
+                    @endif
                 </div>
 
 

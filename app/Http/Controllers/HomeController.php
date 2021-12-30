@@ -11,88 +11,123 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Collection;
 use MeiliSearch\Client;
 use Analytics;
+use App\Repository\Elasticsearch;
 use Spatie\Analytics\Period;
 
 class HomeController extends Controller
 {
+    private $repository;
+
+    public function __construct(Elasticsearch $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function index()
     {
-        $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
 
-        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH', 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $headline = $this->repository->get('article',[
+            'from'      => 0,
+            'size'      => 5,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'feature.id' => 1
+                ],
+                'match' => [
+                    'status' => 'PUBLISH'
+                ]
+            ]
+        ]);
 
-        $editor_choice = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 2 AND status = PUBLISH', 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $editor_choice = $this->repository->get('article',[
+            'from'      => 0,
+            'size'      => 5,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'feature.id' => 2
+                ],
+                'match' => [
+                    'status' => 'PUBLISH'
+                ]
+            ]
+        ]);
 
-        $recent = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH', 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $recent = $this->repository->get('article',[
+            'from'      => 0,
+            'size'      => 20,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'status' => 'PUBLISH'
+                ]
+            ]
+        ]);
 
-        $photos = $client->index('photo')->search('', ['limit' => 4, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'user_id',
-            'user_name',
-            'images',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $recent = array_chunk(parse_json($recent)['hits'], 10);
 
-        $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
+        $photos = $this->repository->get('photo',[
+            'from'      => 0,
+            'size'      => 20,
+            '_source'   => ['id', 'title', 'slug', 'image.media.small', 'image.caption', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+        ]);
 
-        // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
+        $menu = $this->repository->get('category',[
+            'sort'      => [
+                [
+                    'order' => [
+                        'order' => 'asc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'present' => 1
+                ]
+            ]
+        ]);
 
-        return view('index', [
+        // // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
+
+        return view('home', [
             'recent' => $recent,
-            'headline' => $headline,
-            'editorChoice' => $editor_choice,
-            'menu' => $menu,
-            'photos' => $photos
+            'headline' => parse_json($headline),
+            'editorChoice' => parse_json($editor_choice),
+            'menu' => parse_json($menu),
+            'photos' => parse_json($photos)
         ]);
 
         // return view('index')->with([]);
 
         // return view('index', compact(['recent', 'headline', 'breakingNews', 'umum', 'wisata', 'lifestyle']));
     }
-
 }

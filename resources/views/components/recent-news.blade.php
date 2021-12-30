@@ -4,23 +4,23 @@
         <h3 class="text-2xl font-semibold">{!! $name !!}</h3>
     </div>
 
-    @foreach ($posts['hits'] as $item)
+    @foreach ($posts as $item)
         <div class="flex md:flex-wrap flex-row md:pr-5 pr-0 mb-10 md:mx-0 mx-2">
 
             <div class="w-2/3 md:mx-0 mx-2 md:order-1 order-2">
                 <span
-                    class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['category_name'] }}</span>
+                    class="text-xs text-gray-500 uppercase border-b-2 border-green-500">{{ $item['_source']['category']['name'] }}</span>
 
                 <h2
                     class="md:text-lg text-sm font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2">
                     <a
-                        href="{{ route('read', [$item['id'], Carbon\Carbon::parse($item['created_at'])->format('dmY'), $item['slug']]) }}">{{ $item['title'] }}</a>
+                        href="{{ route('read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">{{ $item['_source']['title'] }}</a>
                 </h2>
                 @if (!Agent::isMobile())
-                    <p class="text-gray-600 text-sm line-clamp-2 sm:block hidden">{{ $item['description'] }}</p>
+                    <p class="text-gray-600 text-sm line-clamp-2 sm:block hidden">{{ $item['_source']['description'] }}</p>
                 @endif
                 <div class="text-gray-700 mt-1">
-                    <span class="text-xs">{{ Carbon\Carbon::parse($item['created_at'])->format('d M Y, H:m') }}
+                    <span class="text-xs">{{ Carbon\Carbon::parse($item['_source']['created_at'])->format('d M Y, H:m') }}
                         WIB</span>
                 </div>
                 <!-- most-recent-item-info -->
