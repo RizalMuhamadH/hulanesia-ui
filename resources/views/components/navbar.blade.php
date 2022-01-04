@@ -100,7 +100,7 @@
         <div class="py-3 mt-3 -mx-3 overflow-y-auto whitespace-nowrap scroll-hidden">
             @foreach ($menu['hits'] as $item)
                 <a href="{{ route('category', $item['_source']['slug']) }}"
-                    class="mx-4 text-sm leading-5 text-gray-700 transition-colors duration-200 transform md:my-0 hover:border-b-2 hover:border-solid hover:border-gray-500 {{ Request::segment(1) == $item['_source']['slug'] ? 'py-1 px-2 rounded-xl bg-gray-100 text-gray-500' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
+                    class="mx-4 text-sm leading-5 text-gray-700 transition-colors duration-200 transform md:my-0 hover:border-b-2 hover:border-solid hover:border-teal-400 {{ Request::segment(1) == $item['_source']['slug'] ? 'border-teal-400 border-b-2 text-gray-500' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
             @endforeach
         </div>
     </div>
