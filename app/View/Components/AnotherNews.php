@@ -4,21 +4,19 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class ReadBody extends Component
+class AnotherNews extends Component
 {
+    public $posts = [];
+    public $name = '';
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $post;
-    public $content;
-    public $pagination;
-    public function __construct($post, $content, $pagination = '')
+    public function __construct($posts, $name = '')
     {
-        $this->post = $post;
-        $this->content = $content;
-        $this->pagination = $pagination;
+        $this->posts = $posts;
+        $this->name = $name;
     }
 
     /**
@@ -28,6 +26,6 @@ class ReadBody extends Component
      */
     public function render()
     {
-        return view('components.read-body');
+        return view('components.another-news');
     }
 }

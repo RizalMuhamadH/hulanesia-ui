@@ -91,7 +91,7 @@ class HomeController extends Controller
         $photos = $this->repository->get('photo',[
             'from'      => 0,
             'size'      => 20,
-            '_source'   => ['id', 'title', 'slug', 'image.media.small', 'image.caption', 'created_at'],
+            '_source'   => ['id', 'title', 'slug', 'images.media.original', 'image.caption', 'created_at'],
             'sort'      => [
                 [
                     'id' => [

@@ -14,7 +14,7 @@
                 <h2
                     class="md:text-lg text-sm font-semibold text-gray-900 leading-tight mb-3 mt-1 md:line-clamp-3 line-clamp-2">
                     <a
-                        href="{{ route('read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">{{ $item['_source']['title'] }}</a>
+                        href="{{ route('read', [$item['_source']['category']['slug'],$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">{{ $item['_source']['title'] }}</a>
                 </h2>
                 @if (!Agent::isMobile())
                     <p class="text-gray-600 text-sm line-clamp-2 sm:block hidden">{{ $item['_source']['description'] }}</p>

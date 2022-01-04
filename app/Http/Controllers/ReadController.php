@@ -4,57 +4,90 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Category;
+use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
 use MeiliSearch\Client;
+use Illuminate\Support\Str;
 
 class ReadController extends Controller
 {
-    public function index($id, $date, $slug)
+    private $repository;
+
+    public function __construct(Elasticsearch $repository)
     {
-        $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
+        $this->repository = $repository;
+    }
 
-        $data = $client->index('post')->search('', ['filters' => 'status = PUBLISH AND id = '.$id])->getRaw();
-
-        abort_if(count($data['hits']) == 0, 404);
-
-        $post = $data['hits'][0];
-
-        $filter = '';
-
-        foreach ($post['tags_slug'] as $key => $item) {
-            if($key == 0) {
-                if(count($post['tags_slug']) == 1)
-                $filter = 'AND tags_slug = '.$item;
-                else
-                $filter = 'AND (tags_slug = '.$item;
-            } else if((count($post['tags_slug']) - 1) == $key){ 
-                $filter = $filter.' OR tags_slug = '.$item.')';
-            } else {
-                $filter = $filter.' OR tags_slug = '.$item;
-            }
-
+    public function index(Request $request, $category, $id, $date, $slug)
+    {
+        $post = '';
+        try {
+            $post = $this->repository->doc('article', $id);
+        } catch (\Throwable $th) {
+            abort($th->getCode());
         }
 
-        $related = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH '.$filter, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $post = parse_json($post);
 
-        $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
+        $max_paragraf = 2;
 
-        return view('read', compact(['post', 'related', 'menu']));
+        $content = read_content($post['_source']['body'], $max_paragraf, $request->page ?? 1);
+
+        $keyword = collect($post['_source']['tags'])->implode('name', ' OR ');
+
+        $related = $this->repository->get('article', [
+            'from'      => 0,
+            'size'      => 20,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'bool' => [
+                    'must_not' => [
+                        'match' => [
+                            'id' => $post['_source']['id']
+                        ]
+                    ],
+                    'must' => [
+                        [
+                            'match' => [
+                                'status' => 'PUBLISH'
+                            ]
+                        ],
+                        [
+                            'query_string' => [
+                                'query' => '(' . $keyword . ')',
+                                'fields' => ['title']
+                            ],
+                        ]
+                    ]
+
+                ]
+            ]
+        ]);
+
+        $menu = $this->repository->get('category', [
+            'sort'      => [
+                [
+                    'order' => [
+                        'order' => 'asc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'present' => 1
+                ]
+            ]
+        ]);
+
+        return view('read', ['post' => $post, 'content' => $content, 'related' => parse_json($related), 'menu' => parse_json($menu), 'pagination' => read_pagination($post['_source']['body'], $request->page ?? 1, $max_paragraf)]);
     }
 }

@@ -21,10 +21,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/post/detail/{id}/{date}/{slug}', [ReadController::class, 'index'])->name('read');
-Route::get('/category/{slug}', [CategoryController::class, 'index'])->name('category');
 Route::get('/tag/{slug}', [TagController::class, 'index'])->name('tag');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/page/{setting:slug}', [PageController::class, 'index'])->name('page');
 Route::get('/photo', [PhotoController::class, 'index'])->name('index');
 Route::get('/photo/detail/{id}/{date}/{slug}', [PhotoController::class, 'detail'])->name('photo');
+Route::get('/{slug}', [CategoryController::class, 'index'])->name('category');
+Route::get('/{category}/{id}/{date}/{slug}', [ReadController::class, 'index'])->name('read');

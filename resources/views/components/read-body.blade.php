@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-wrap mb-5">
         @if (!Agent::isMobile())
-            <div class="md:w-36 w-full ml-auto p-3 text-center order-2">
+            <div class="md:w-1/5 w-full ml-auto p-3 text-center order-2">
                 {{-- <h3 class="text-sm font-light uppercase mb-4">
                             <span class="md:block inline">Share</span>
                             <span class="md:block inline">With</span>
@@ -24,23 +24,24 @@
                         </ul> --}}
             </div>
         @endif
-        <div class="md:w-2/3 w-full mr-auto md:p-3 p-6 order-1">
+        <div class="md:w-4/5 w-full mr-auto md:p-3 p-6 order-1">
 
             <div class="md:text-xl text-lg font-semibold leading-normal">
-                <p>{{ $post['description'] ?? '' }}</p>
+                <p>{{ $post['_source']['description'] ?? '' }}</p>
             </div>
             <div class="mt-5 md:text-lg text-base leading-normal text-gray-900">
-                {!! $post['body'] ?? '' !!}
+                {!! $content ?? '' !!}
 
                 <div class="mt-5">
-                    Editor : {{ $post['user'] }}
+                    Editor : {{ $post['_source']['editor']['name'] ?? '' }}
                 </div>
+                {!! $pagination !!}
             </div>
             <div class="single-post-tags mt-12">
                 <ul>
-                    @foreach ($post['tags_name'] as $item)
-                        <li class="inline-block"> <a href="{{ route('tag', $post['tags_slug'][$loop->index]) }}"
-                                class="inline-block border border-gray-300 px-3 transition-3 rounded hover:border-gray-500">{{ $item }}</a>
+                    @foreach ($post['_source']['tags'] as $item)
+                        <li class="inline-block"> <a href="{{ route('tag', $item['slug']) }}"
+                                class="inline-block border border-gray-300 px-3 transition-3 rounded hover:border-gray-500">{{ $item['name'] }}</a>
                         </li>
                     @endforeach
                 </ul>

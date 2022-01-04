@@ -1,10 +1,15 @@
 @if ($paginator->hasPages())
-    <div class="most-recent-items-pagination pagination py-5">
-        <ul>
+    <div class="most-recent-items-pagination pagination py-5 px-5">
+        <ul class="flex">
             @if (!$paginator->onFirstPage())
-                <li class="inline-block">
-                    <a class="border border-gray-300 px-3 py-1 rounded hover:bg-gray-800 hover:text-white"
-                        href="{{ $paginator->previousPageUrl() }}">{!! __('Previous') !!}</a>
+                <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white">
+                    <a href="{{ $paginator->previousPageUrl() }}" >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+                        </svg>
+                    </a>
+                    {{-- <a class="border border-gray-300 px-3 py-1 rounded hover:bg-gray-800 hover:text-white"
+                        href="{{ $paginator->previousPageUrl() }}">{!! __('Previous') !!}</a> --}}
                 </li>
             @endif
 
@@ -14,7 +19,7 @@
                 @if (is_string($element))
                     <span aria-disabled="true">
                         <span
-                            class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5">{{ $element }}</span>
+                            class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline">{{ $element }}</span>
                     </span>
                 @endif
 
@@ -22,12 +27,12 @@
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                        <li class="inline-block">
-                            <span class="border border-gray-300 px-3 py-1 rounded bg-gray-800 text-white">{{ $page }}</span>
+                        <li class="flex items-center justify-center px-4 py-2 mx-1 transition-colors duration-200 transform rounded-md sm:inline bg-blue-500 text-white">
+                            <span>{{ $page }}</span>
                         </li>
                         @else
-                        <li class="inline-block">
-                            <a class="border border-gray-300 px-3 py-1 rounded hover:bg-gray-800 hover:text-white" aria-label="{{ __('Go to page :page', ['page' => $page]) }}" href="{{ $url }}">{{ $page }}</a>
+                        <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md sm:inline hover:bg-blue-500 hover:text-white" >
+                            <a aria-label="{{ __('Go to page :page', ['page' => $page]) }}" href="{{ $url }}">{{ $page }}</a>
                         </li>
                         @endif
                     @endforeach
@@ -35,9 +40,14 @@
             @endforeach
 
             @if ($paginator->hasMorePages())
-                <li class="inline-block">
-                    <a class="border border-gray-300 px-3 py-1 rounded hover:bg-gray-800 hover:text-white"
-                        href="{{ $paginator->nextPageUrl() }}">{!! __('Next') !!}</a>
+                <li class="flex items-center justify-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-200 transform bg-white rounded-md hover:bg-blue-500 hover:text-white">
+                    <a href="{{ $paginator->nextPageUrl() }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
+                    {{-- <a class="border border-gray-300 px-3 py-1 rounded hover:bg-gray-800 hover:text-white"
+                        href="{{ $paginator->nextPageUrl() }}">{!! __('Next') !!}</a> --}}
                 </li>
             @endif
 

@@ -18,13 +18,13 @@
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
-                    <x-collection-photo :name="'Photo'" :photos="$recent"></x-collection-photo>
+                    <x-collection-photo :name="'Photo'" :photos="$recent['hits']"></x-collection-photo>
                     @if (count($recent['hits']) == 20)
                         <livewire:loadmore :initCount="count($recent['hits'])" :scaffold="'photo'"/>
                     @endif
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
                 {{-- <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news> --}}

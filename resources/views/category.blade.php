@@ -24,6 +24,7 @@
                         {{-- @if (count($recent['hits']) == 20) --}}
                         {{-- <livewire:loadmore :initCount="count($recent['hits'])" :scaffold="'category'" :slug="$category['slug']"/> --}}
                         {{-- @endif --}}
+                        {{ $pagination->links('vendor.pagination.custom') }}
                     </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">

@@ -28,7 +28,8 @@
                     <!-- popular-wrapper -->
                 </div>
 
-                <x-recent-photo :photos="$photos"></x-recent-photo>
+                {{-- <x-recent-photo :photos="$photos"></x-recent-photo> --}}
+                <x-another-news :posts="[]" :name="''"></x-another-news>
                 {{-- <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news> --}}
             </div>
         </div>
@@ -66,11 +67,13 @@
 
             <x-collection-news :posts="$olahraga" :name="'Olahraga'"></x-collection-news>
 
-            <x-category-news :posts="$traveling" :name="'Traveling'"></x-category-news>
+            <x-category-news :posts="$traveling" :name="'Traveling'"></x-category-news> --}}
 
-            <x-collection-news :posts="$gaya_hidup" :name="'Gaya hidup'"></x-collection-news>
+            {{-- <x-collection-news :posts="$recent[1]" :name="'Gaya hidup'"></x-collection-news> --}}
 
-            <x-category-news :posts="$otomotif" :name="'Otomotif'"></x-category-news> --}}
+            <x-another-news :posts="[]" :name="''"></x-another-news>
+
+            {{-- <x-category-news :posts="$recent[1]" :name="'Otomotif'"></x-category-news> --}}
         </div>
 
         @push('script')

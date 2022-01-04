@@ -16424,6 +16424,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var docEditor = document.getElementById("editor-choice");
 var docHeadline = document.getElementById("headline");
+var docPhoto = document.getElementById("photo");
 
 if (docEditor) {
   var editor = new Flicking("#editor-choice", {
@@ -16451,6 +16452,16 @@ if (docHeadline) {
   headline.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Fade(), new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Pagination({
     type: "bullet"
   }));
+}
+
+if (docPhoto) {
+  var _headline = new Flicking("#photo", {
+    circular: true,
+    horizontal: true,
+    align: "center",
+    autoResize: false,
+    duration: 500
+  });
 }
 })();
 

@@ -1,113 +1,107 @@
-<nav class="bg-gray-800 sticky top-0 z-50" x-data="{
-    open: false,
-    get isOpen() { return this.open },
-    toggle() { this.open = ! this.open },
-  }">
-    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div class="relative flex items-center justify-between h-16">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <!-- Mobile menu button-->
-                <button type="button" x-on:click="toggle"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                    aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="sr-only">Menu</span>
-                    <!--
-              Icon when menu is closed.
-  
-              Heroicon name: outline/menu
-  
-              Menu open: "hidden", Menu closed: "block"
-            -->
-                    <svg x-show="isOpen == false" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                    <!--
-              Icon when menu is open.
-  
-              Heroicon name: outline/x
-  
-              Menu open: "block", Menu closed: "hidden"
-            -->
-                    <svg x-show="isOpen == true" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+<!-- Require css -->
+<style>
+    .scroll-hidden::-webkit-scrollbar {
+        height: 0px;
+        background: transparent;
+        /* make scrollbar transparent */
+    }
+
+</style>
+
+<nav class="bg-white shadow" x-data="{
+            open: false,
+            get isOpen() { return this.open },
+            toggle() { this.open = ! this.open },
+          }">
+    <div class="container px-6 py-3 mx-auto">
+        <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex w-full items-center justify-between">
+                <div class="flex w-full items-center justify-between">
+                    <a class="text-2xl font-bold text-gray-800 transition-colors duration-200 transform lg:text-3xl hover:text-gray-700"
+                        href="#">Brand</a>
+
+                    <!-- Search input on desktop screen -->
+                    <div class="hidden mx-10 md:block">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </svg>
+                            </span>
+                            <form action="{{ route('search') }}" method="GET" role="search">
+                            <input type="text" name="search" value="{{ old('word') }}"
+                                class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md  focus:border-blue-500 focus:outline-none focus:ring"
+                                placeholder="Search">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @if (Agent::isMobile())
+                    <!-- Mobile menu button -->
+                    <div class="flex md:hidden">
+                        <button type="button" x-on:click="toggle"
+                            class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+                            aria-label="toggle menu">
+                            <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
+                                <path fill-rule="evenodd"
+                                    d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                @endif
             </div>
-            <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                {{-- <div class="flex-shrink-0 flex items-center">
-                    <img class="block lg:hidden h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
-                    <img class="hidden lg:block h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                        alt="Workflow">
+
+            <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
+            <div class="items-center md:flex" :class="isOpen == true ? '' : 'hidden'">
+                {{-- <div class="flex flex-col mt-2 md:flex-row md:mt-0 md:mx-1">
+                    <a class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                        href="#">Home</a>
+                    <a class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                        href="#">Blog</a>
+                    <a class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                        href="#">Compoents</a>
+                    <a class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                        href="#">Courses</a>
+                </div>
+
+                <div class="flex items-center py-2 -mx-1 md:mx-0">
+                    <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                        href="#">Login</a>
+                    <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 md:mx-0 md:w-auto"
+                        href="#">Join free</a>
                 </div> --}}
 
-                {{-- {{ dd($menu->hits) }} --}}
-                <div class="hidden sm:block sm:ml-6">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="/"
-                            class="px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
-                            aria-current="page">Home</a>
+                <!-- Search input on mobile screen -->
+                <div class="mt-3 md:hidden">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                            <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"></path>
+                            </svg>
+                        </span>
 
-                        @foreach ($menu['hits'] as $item)
-                            <a href="{{ route('category', $item['_source']['slug']) }}"
-                                class="hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-semibold {{ Request::segment(2) == $item['_source']['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
-                        @endforeach
+                        <form action="{{ route('search') }}" method="GET" role="search">
+                        <input type="text" name="search" value="{{ old('word') }}"
+                            class="w-full py-2 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:outline-none focus:ring"
+                            placeholder="Search">
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <form action="{{ route('search') }}" method="GET" role="search">
-                <div class="hidden sm:block relative pull-right pl-4 pr-4 md:pr-0">
-                    <input type="search" name="word" placeholder="Search"
-                        class="w-full bg-gray-900 text-sm text-gray-400 transition border border-gray-800 focus:outline-none focus:border-gray-600 rounded py-1 px-2 pl-10 appearance-none leading-normal" value="{{ old('word') }}">
-                    <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
-                        <svg class="fill-current pointer-events-none text-gray-500 w-4 h-4"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path
-                                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-            </form>
-
         </div>
-    </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu">
-        <div class="px-2 pt-2 pb-3 space-y-1" :class="isOpen == true ? '' : 'hidden'">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="/"
-                class="block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(1) == '' ? 'bg-gray-900 text-white' : 'text-gray-300' }}"
-                aria-current="page">Home</a>
-
+        <div class="py-3 mt-3 -mx-3 overflow-y-auto whitespace-nowrap scroll-hidden">
             @foreach ($menu['hits'] as $item)
                 <a href="{{ route('category', $item['_source']['slug']) }}"
-                    class="hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium {{ Request::segment(2) == $item['_source']['slug'] ? 'bg-gray-900 text-white' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
+                    class="mx-4 text-sm leading-5 text-gray-700 transition-colors duration-200 transform md:my-0 hover:border-b-2 hover:border-solid hover:border-gray-500 {{ Request::segment(1) == $item['_source']['slug'] ? 'py-1 px-2 rounded-xl bg-gray-100 text-gray-500' : 'text-gray-300' }}">{{ $item['_source']['name'] }}</a>
             @endforeach
-
-            <form action="{{ route('search') }}" method="GET" role="search">
-                <div class="relative pl-4 pr-4 md:pr-0">
-                    <input type="search" name="word" placeholder="Search"
-                        class="w-full bg-gray-900 text-sm text-gray-400 transition border border-gray-800 focus:outline-none focus:border-gray-600 rounded py-1 px-2 pl-10 appearance-none leading-normal" value="{{ old('word') }}">
-                    <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
-                        <svg class="fill-current pointer-events-none text-gray-500 w-4 h-4"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path
-                                d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
-                            </path>
-                        </svg>
-                    </div>
-                </div>
-            </form>
-
         </div>
     </div>
 </nav>

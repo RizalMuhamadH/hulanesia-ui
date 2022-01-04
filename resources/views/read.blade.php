@@ -1,16 +1,16 @@
 <x-layouts.app>
     @push('title')
-        <title>{{ $post['title'] }}</title>
+        <title>{{ $post['_source']['title'] }}</title>
     @endpush
     
     @push('head')
-    <meta name="description" content="{{ $post['meta_description'] ?? $post['description'] }}">
-    <meta name="keywords" content="{{ $post['meta_keywords'] ?? env('META_KEYWORD') }}">
-    <meta name="author" content="{{ $post['user'] }}">
-    <meta property="og:title" content="{{ $post['title'] }}">
-    <meta property="og:description" content="{{ $post['meta_description'] ?? $post['description'] }}">
-    <meta property="og:image" content="{{ url('/') }}/storage/{{ $post['image']['media']['medium'] }}">
-    <meta property="og:site_name" content="{{ $post['title'] }}">
+    <meta name="description" content="{{ $post['_source']['meta_description'] ?? $post['_source']['description'] }}">
+    <meta name="keywords" content="{{ $post['_source']['meta_keywords'] ?? env('META_KEYWORD') }}">
+    <meta name="author" content="{{ $post['_source']['editor']['name'] ?? '' }}">
+    <meta property="og:title" content="{{ $post['_source']['title'] }}">
+    <meta property="og:description" content="{{ $post['_source']['meta_description'] ?? $post['_source']['description'] }}">
+    <meta property="og:image" content="{{ env('STORAGE') }}/storage/{{ $post['_source']['image']['media']['medium'] }}">
+    <meta property="og:site_name" content="{{ $post['_source']['title'] }}">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
@@ -21,13 +21,13 @@
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
                     <x-read-title-image :post="$post"></x-read-title-image>
                     <div>
-                        <x-read-body :post="$post"></x-read-body>
-                        <x-recent-news :posts="$related" :name="'Artikel Lainnya'"></x-recent-news>
+                        <x-read-body :post="$post" :content="$content" :pagination="$pagination"></x-read-body>
+                        <x-recent-news :posts="$related['hits']" :name="'Artikel Lainnya'"></x-recent-news>
                         {{-- <x-collection-news :posts="$related" :name="'Related'"></x-collection-news> --}}
                     </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
             </div>

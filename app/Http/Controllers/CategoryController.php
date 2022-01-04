@@ -13,6 +13,7 @@ use MeiliSearch\Client;
 class CategoryController extends Controller
 {
     private $repository;
+    private $size = 20;
 
     public function __construct(Elasticsearch $repository)
     {
@@ -46,8 +47,8 @@ class CategoryController extends Controller
         ]);
 
         $recent = $this->repository->get('article', [
-            'from'      => 0,
-            'size'      => 20,
+            'from'      => isset(request()->page) ? ($this->size * request()->page) : 0,
+            'size'      => $this->size,
             '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
             'sort'      => [
                 [
@@ -65,6 +66,8 @@ class CategoryController extends Controller
                 ]
             ]
         ]);
+
+        $recent = parse_json($recent);
 
         $menu = $this->repository->get('category', [
             'sort'      => [
@@ -94,12 +97,14 @@ class CategoryController extends Controller
 
         abort_if(count($category['hits']) == 0, 404);
 
+        $pagination = $this->paginate($recent['total']['value'], $this->size);
 
         return view('category', [
             'headline'      => parse_json($headline),
             'category'      => $category['hits'][0],
-            'recent'        => parse_json($recent),
-            'menu'          => parse_json($menu)
+            'recent'        => $recent,
+            'menu'          => parse_json($menu),
+            "pagination"    => $pagination,
         ]);
     }
 }

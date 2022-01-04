@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
+use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
@@ -12,51 +13,112 @@ use MeiliSearch\Client;
 
 class TagController extends Controller
 {
+    private $repository;
+
+    public function __construct(Elasticsearch $repository)
+    {
+        $this->repository = $repository;
+    }
+    
     public function index($slug)
     {
-        $client = new Client('http://127.0.0.1:7700', 'wehealth.id');
 
-        $headline = $client->index('post')->search('', ['limit' => 5, 'filters' => 'feature_id = 1 AND status = PUBLISH AND tags_slug = '.$slug, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $headline = $this->repository->get('article',[
+            'from'      => 0,
+            'size'      => 5,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'match' => [
+                                'feature.id' => 1
+                            ],
+                        ],
+                        [
+                            'match' => [
+                                'status' => 'PUBLISH'
+                            ]
+                        ],
+                        [
+                            'match' => [
+                                'tags.slug' => $slug
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
 
-        $posts = $client->index('post')->search('', ['limit' => 20, 'filters' => 'status = PUBLISH AND tags_slug = '.$slug, 'attributesToRetrieve' => [
-            'id',
-            'title',
-            'slug',
-            'description',
-            'feature_id',
-            'category_id',
-            'category_name',
-            'user_id',
-            'user',
-            'status',
-            'image',
-            'created_at',
-            'timestamp'
-        ]])->getRaw();
+        $recent = $this->repository->get('article',[
+            'from'      => 0,
+            'size'      => 20,
+            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+            'sort'      => [
+                [
+                    'id' => [
+                        'order' => 'desc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'bool' => [
+                    'must' => [
+                        [
+                            'match' => [
+                                'status' => 'PUBLISH'
+                            ]
+                        ],
+                        [
+                            'match' => [
+                                'tags.slug' => $slug
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $recent = parse_json($recent);
 
         
-        $data = $client->index('tag')->search('', ['filters' => 'slug = '.$slug])->getRaw();
+        $tag = $this->repository->get('tag', [
+            'query'     => [
+                'match' => [
+                    'slug' => $slug
+                ]
+            ]
+        ]);
 
-        abort_if(count($data['hits']) == 0, 404);
 
-        $tag = $data['hits'][0];
+        $tag = parse_json($tag);
 
-        $menu = $client->index('category')->search('', ['filters' => 'order > 0'])->getRaw();
+        abort_if(count($tag['hits']) == 0, 404);
 
-        return view('tag', compact(['headline' ,'tag', 'posts', 'menu']));
+        $menu = $this->repository->get('category', [
+            'sort'      => [
+                [
+                    'order' => [
+                        'order' => 'asc'
+                    ]
+                ]
+            ],
+            'query'     => [
+                'match' => [
+                    'present' => 1
+                ]
+            ]
+        ]);
+
+        $pagination = $this->paginate($recent['total']['value'], $this->size);
+
+        return view('tag', ['headline' => parse_json($headline) ,'tag' => $tag['hits'][0], 'posts' => $recent, 'menu' => parse_json($menu), "pagination" => $pagination]);
     }
 }
