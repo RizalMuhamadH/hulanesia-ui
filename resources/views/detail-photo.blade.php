@@ -1,16 +1,16 @@
 <x-layouts.app>
     @push('title')
-        <title>{{ $photo['title'] }}</title>
+        <title>{{ $photo['_source']['title'] }}</title>
     @endpush
 
     @push('head')
-        <meta name="description" content="{{ $photo['description'] }}">
+        <meta name="description" content="{{ $photo['_source']['description'] }}">
         <meta name="keywords" content="{{ env('META_KEYWORD') }}">
-        <meta name="author" content="{{ $photo['user_name'] }}">
-        <meta property="og:title" content="{{ $photo['title'] }}">
-        <meta property="og:description" content="{{ $photo['description'] }}">
-        <meta property="og:image" content="{{ url('/') }}/storage/{{ $photo['images'][0]['media']['medium'] }}">
-        <meta property="og:site_name" content="{{ $photo['title'] }}">
+        <meta name="author" content="{{ $photo['_source']['editor']['name'] }}">
+        <meta property="og:title" content="{{ $photo['_source']['title'] }}">
+        <meta property="og:description" content="{{ $photo['_source']['description'] }}">
+        <meta property="og:image" content="{{ env('STORAGE') }}storage/{{ $photo['_source']['images'][0]['media']['medium'] }}">
+        <meta property="og:site_name" content="{{ $photo['_source']['title'] }}">
     @endpush
 
     @push('style')
@@ -27,11 +27,11 @@
                     <x-photo-title-image :photo="$photo" />
                     <div>
                         <x-photo-description :photo="$photo"></x-photo-description>
-                        <x-collection-photo :name="'Photo Lainnya'" :photos="$recent"></x-collection-photo>
+                        <x-collection-photo :name="'Photo Lainnya'" :photos="$recent['hits']"></x-collection-photo>
                     </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
             </div>

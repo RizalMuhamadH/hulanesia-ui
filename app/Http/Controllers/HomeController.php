@@ -12,6 +12,7 @@ use Illuminate\Support\Collection;
 use MeiliSearch\Client;
 use Analytics;
 use App\Repository\Elasticsearch;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Analytics\Period;
 
 class HomeController extends Controller
@@ -26,104 +27,111 @@ class HomeController extends Controller
     public function index()
     {
 
-        $headline = $this->repository->get('article',[
-            'from'      => 0,
-            'size'      => 5,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+        $headline = Cache::remember('home_headline', 300, function(){
+            $res = $this->repository->get('article',[
+                'from'      => 0,
+                'size'      => 5,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
                     ]
-                ]
-            ],
-            'query'     => [
-                'match' => [
-                    'feature.id' => 1
                 ],
-                'match' => [
-                    'status' => 'PUBLISH'
-                ]
-            ]
-        ]);
-
-        $editor_choice = $this->repository->get('article',[
-            'from'      => 0,
-            'size'      => 5,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+                'query'     => [
+                    'match' => [
+                        'feature.id' => 1
+                    ],
+                    'match' => [
+                        'status' => 'PUBLISH'
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'feature.id' => 2
+            ]);
+
+            return parse_json($res);
+        });
+
+
+        $editor_choice = Cache::remember('editor_choice', 300, function () {
+            $res = $this->repository->get('article',[
+                'from'      => 0,
+                'size'      => 5,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
+                    ]
                 ],
-                'match' => [
-                    'status' => 'PUBLISH'
-                ]
-            ]
-        ]);
-
-        $recent = $this->repository->get('article',[
-            'from'      => 0,
-            'size'      => 20,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+                'query'     => [
+                    'match' => [
+                        'feature.id' => 2
+                    ],
+                    'match' => [
+                        'status' => 'PUBLISH'
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'status' => 'PUBLISH'
-                ]
-            ]
-        ]);
+            ]);
 
-        $recent = array_chunk(parse_json($recent)['hits'], 10);
+            return parse_json($res);
+            
+        });
 
-        $photos = $this->repository->get('photo',[
-            'from'      => 0,
-            'size'      => 20,
-            '_source'   => ['id', 'title', 'slug', 'images.media.original', 'image.caption', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+
+        $recent = Cache::remember('home_recent', 180, function () {
+            $res = $this->repository->get('article',[
+                'from'      => 0,
+                'size'      => 20,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
+                    ]
+                ],
+                'query'     => [
+                    'match' => [
+                        'status' => 'PUBLISH'
                     ]
                 ]
-            ],
-        ]);
+            ]);
 
-        $menu = $this->repository->get('category',[
-            'sort'      => [
-                [
-                    'order' => [
-                        'order' => 'asc'
+            return parse_json($res);
+            
+        });
+        
+
+        $recent = array_chunk($recent['hits'], 10);
+
+        $photos = Cache::remember('home_photo', 600, function () {
+            $res = $this->repository->get('photo',[
+                'from'      => 0,
+                'size'      => 20,
+                '_source'   => ['id', 'title', 'slug', 'images.media.original', 'image.caption', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
                     ]
-                ]
-            ],
-            'query'     => [
-                'match' => [
-                    'present' => 1
-                ]
-            ]
-        ]);
+                ],
+            ]);
+
+            return parse_json($res);
+            
+        });
+        
 
         // // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
 
         return view('home', [
             'recent' => $recent,
-            'headline' => parse_json($headline),
-            'editorChoice' => parse_json($editor_choice),
-            'menu' => parse_json($menu),
-            'photos' => parse_json($photos)
+            'headline' => $headline,
+            'editorChoice' => $editor_choice,
+            'photos' => $photos
         ]);
 
         // return view('index')->with([]);

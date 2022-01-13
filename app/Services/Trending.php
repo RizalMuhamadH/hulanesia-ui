@@ -3,13 +3,19 @@
 namespace App\Services;
 
 use Analytics;
+use Illuminate\Support\Facades\Cache;
 use Spatie\Analytics\Period;
 
 class Trending
 {
     public function week($limit = 20)
     {
-        return $this->getResults(7);
+        $res = Cache::remember('trending_week', 1200, function () use ($limit) {
+            $data = $this->getResults(7);
+
+            return $data;
+        });
+        return $res;
     }
     protected function getResults($days, $limit = 20)
     {

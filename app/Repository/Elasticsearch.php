@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use Elasticsearch\ClientBuilder;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 class Elasticsearch {
     public function get($index, $params)
@@ -23,6 +24,12 @@ class Elasticsearch {
             'headers'   => ['Content-Type' => 'application/json'],
         ]);
 
-        return $http->request('GET', env('ELASTICSEARCH_HOST', '').$index.'/_doc/'.$id);
+        try {
+            $res = $http->request('GET', env('ELASTICSEARCH_HOST', '').$index.'/_doc/'.$id);
+        } catch (ClientException $th) {
+            abort($th->getCode(), $th->getMessage());
+        }
+
+        return $res;
     }
 }

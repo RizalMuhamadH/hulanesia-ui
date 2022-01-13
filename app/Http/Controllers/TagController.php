@@ -9,11 +9,13 @@ use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
+use Illuminate\Support\Facades\Cache;
 use MeiliSearch\Client;
 
 class TagController extends Controller
 {
     private $repository;
+    private $size = 20;
 
     public function __construct(Elasticsearch $repository)
     {
@@ -22,103 +24,99 @@ class TagController extends Controller
     
     public function index($slug)
     {
-
-        $headline = $this->repository->get('article',[
-            'from'      => 0,
-            'size'      => 5,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+        $size = $this->size;
+        $headline = Cache::remember('headline_tag_'.$slug, 600, function () use($slug, $size) {
+            $res = $this->repository->get('article',[
+                'from'      => 0,
+                'size'      => $size,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
                     ]
-                ]
-            ],
-            'query'     => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'match' => [
-                                'feature.id' => 1
+                ],
+                'query'     => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'match' => [
+                                    'feature.id' => 1
+                                ],
                             ],
-                        ],
-                        [
-                            'match' => [
-                                'status' => 'PUBLISH'
-                            ]
-                        ],
-                        [
-                            'match' => [
-                                'tags.slug' => $slug
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]);
-
-        $recent = $this->repository->get('article',[
-            'from'      => 0,
-            'size'      => 20,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
-                    ]
-                ]
-            ],
-            'query'     => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'match' => [
-                                'status' => 'PUBLISH'
-                            ]
-                        ],
-                        [
-                            'match' => [
-                                'tags.slug' => $slug
+                            [
+                                'match' => [
+                                    'status' => 'PUBLISH'
+                                ]
+                            ],
+                            [
+                                'match' => [
+                                    'tags.slug' => $slug
+                                ]
                             ]
                         ]
                     ]
                 ]
-            ]
-        ]);
+            ]);
 
-        $recent = parse_json($recent);
+            return parse_json($res);
+            
+        });
+
+        $recent = Cache::remember('recent_tag_'.$slug, 300, function () use($slug) {
+            $res = $this->repository->get('article',[
+                'from'      => 0,
+                'size'      => 20,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
+                    ]
+                ],
+                'query'     => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'match' => [
+                                    'status' => 'PUBLISH'
+                                ]
+                            ],
+                            [
+                                'match' => [
+                                    'tags.slug' => $slug
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+
+            return parse_json($res);
+            
+        });
 
         
-        $tag = $this->repository->get('tag', [
-            'query'     => [
-                'match' => [
-                    'slug' => $slug
+        $tag = Cache::remember('tag_'.$slug, 300, function () use($slug) {
+            $res = $this->repository->get('tag', [
+                'query'     => [
+                    'match' => [
+                        'slug' => $slug
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
+            return parse_json($res);
+            
+        });
 
-        $tag = parse_json($tag);
 
         abort_if(count($tag['hits']) == 0, 404);
 
-        $menu = $this->repository->get('category', [
-            'sort'      => [
-                [
-                    'order' => [
-                        'order' => 'asc'
-                    ]
-                ]
-            ],
-            'query'     => [
-                'match' => [
-                    'present' => 1
-                ]
-            ]
-        ]);
-
         $pagination = $this->paginate($recent['total']['value'], $this->size);
 
-        return view('tag', ['headline' => parse_json($headline) ,'tag' => $tag['hits'][0], 'posts' => $recent, 'menu' => parse_json($menu), "pagination" => $pagination]);
+        return view('tag', ['headline' => $headline ,'tag' => $tag['hits'][0], 'posts' => $recent, "pagination" => $pagination]);
     }
 }

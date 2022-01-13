@@ -27,7 +27,7 @@
 
 
     <div class="md:my-5 md:w-3/4 w-full mx-auto">
-        <h1 class="md:text-4xl text-xl font-bold text-gray-900 md:mx-0 mx-6">{{ $photo['title'] }}</h1>
+        <h1 class="md:text-4xl text-xl font-bold text-gray-900 md:mx-0 mx-6">{{ $photo['_source']['title'] }}</h1>
 
         <div class="flex mt-3 md:mx-0 md:mb-0 mx-6 mb-6">
             {{-- <div class="w-auto">
@@ -36,29 +36,32 @@
                 </div>
             </div> --}}
             <div class="w-full text-xs pt-px">
-                <div class="text-gray-600"> {{ $photo['user_name'] ?? '' }}
+                <div class="text-gray-600"> {{ $photo['_source']['editor']['name'] ?? '' }}
                 </div>
                 <div class="text-gray-600">
-                    <span>{{ Carbon\Carbon::parse($photo['created_at'])->format('d M Y, H:m') }} WIB</span> </div>
+                    <span>{{ Carbon\Carbon::parse($photo['_source']['created_at'])->format('d M Y, H:m') }} WIB</span>
+                </div>
             </div>
         </div>
         <!-- author-info -->
 
     </div>
-    <div class="gallery md:rounded-lg overflow-hidden shadow-2xl w-full md:h-101 h-full mb-10 self-center relative">
+    <div class="gallery md:rounded-lg overflow-hidden shadow-2xl w-full h-full mb-10 self-center relative">
 
-        <a data-caption="Vestibulum lobortis ultricies ipsum, a maximus ligula dignissim in. Sed consectetur tellus egestas, consequat dolor at, tempus augue. "
-            data-fancybox="gallery-1" href="https://placeimg.com/640/480/any">
-            <img src="https://placeimg.com/640/480/any" alt="{{ $photo['title'] }}" class="object-cover w-full">
-        </a>
-        {{-- <img src="/storage/{{ $photo['images'][0]['media']['small'] ?? '' }}" alt="{{ $photo['title'] }}" class="object-cover w-full"> --}}
-        <a data-caption="Vestibulum lobortis ultricies ipsum, a maximus ligula dignissim in. Sed consectetur tellus egestas, consequat dolor at, tempus augue. "
-            data-fancybox="gallery-1" href="https://lipsum.app/id/1/800x600">
-        </a>
-        <a data-caption="Short caption" data-fancybox="gallery-1" href="https://lipsum.app/id/2/800x600">
-        </a>
-        <a data-fancybox="gallery-1" href="https://lipsum.app/id/3/800x600">
-        </a>
+        @foreach ($photo['_source']['images'] as $item)
+            @if ($loop->first)
+                <a data-caption="{{ $item['caption'] }}"
+                    data-fancybox="gallery-1" href="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}" alt="{{ $photo['_source']['title'] }}">
+                    <img src="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}" alt="{{ $item['caption'] }}"
+                        class="w-full">
+                </a>
+            @else
+                <a data-caption="{{ $item['caption'] }}"
+                    data-fancybox="gallery-1" href="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}">
+                </a>
+            @endif
+
+        @endforeach
 
         <div class="absolute z-10 top-0 right-0">
             <div class="rounded-3xl p-2 bg-gray-500 bg-opacity-30 text-white mt-2 mr-2">
@@ -72,6 +75,6 @@
         </div>
     </div>
     <p class="text-center text-sm ">
-        {{ $photo['images'][0]['caption'] ?? '' }}
+        {{ $photo['_source']['images'][0]['caption'] ?? '' }}
     </p>
 </div>

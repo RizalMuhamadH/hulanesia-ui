@@ -8,6 +8,7 @@ use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use CyrildeWit\EloquentViewable\Support\Period;
+use Illuminate\Support\Facades\Cache;
 use MeiliSearch\Client;
 
 class CategoryController extends Controller
@@ -22,88 +23,82 @@ class CategoryController extends Controller
 
     public function index($slug)
     {
-        $headline = $this->repository->get('article', [
-            'from'      => 0,
-            'size'      => 5,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+        $headline = Cache::remember('category_headline_'.$slug, 300, function() use ($slug) {
+            $res = $this->repository->get('article', [
+                'from'      => 0,
+                'size'      => 5,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
+                    ]
+                ],
+                'query'     => [
+                    'match' => [
+                        'feature.id' => 1
+                    ],
+                    'match' => [
+                        'status' => 'PUBLISH'
+                    ],
+                    'match' => [
+                        'category.slug' => $slug
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'feature.id' => 1
-                ],
-                'match' => [
-                    'status' => 'PUBLISH'
-                ],
-                'match' => [
-                    'category.slug' => $slug
-                ]
-            ]
-        ]);
+            ]);
 
-        $recent = $this->repository->get('article', [
-            'from'      => isset(request()->page) ? ($this->size * request()->page) : 0,
-            'size'      => $this->size,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
+            return parse_json($res);
+
+        });
+
+        $recent = Cache::remember('category_recent_'.$slug, 180, function () use($slug) {
+            $res = $this->repository->get('article', [
+                'from'      => isset(request()->page) ? ($this->size * request()->page) : 0,
+                'size'      => $this->size,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
+                        ]
+                    ]
+                ],
+                'query'     => [
+                    'match' => [
+                        'status' => 'PUBLISH'
+                    ],
+                    'match' => [
+                        'category.slug' => $slug
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'status' => 'PUBLISH'
-                ],
-                'match' => [
-                    'category.slug' => $slug
-                ]
-            ]
-        ]);
+            ]);
 
-        $recent = parse_json($recent);
+            return parse_json($res);
+            
+        });
 
-        $menu = $this->repository->get('category', [
-            'sort'      => [
-                [
-                    'order' => [
-                        'order' => 'asc'
+        $category = Cache::remember('category_'.$slug, 300, function () use($slug) {
+            $res = $this->repository->get('category', [
+                'query'     => [
+                    'match' => [
+                        'slug' => $slug
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'present' => 1
-                ]
-            ]
-        ]);
+            ]);
 
-        $cat = $this->repository->get('category', [
-            'query'     => [
-                'match' => [
-                    'slug' => $slug
-                ]
-            ]
-        ]);
-
-
-        $category = parse_json($cat);
+            return parse_json($res);
+            
+        });
 
         abort_if(count($category['hits']) == 0, 404);
 
         $pagination = $this->paginate($recent['total']['value'], $this->size);
 
         return view('category', [
-            'headline'      => parse_json($headline),
+            'headline'      => $headline,
             'category'      => $category['hits'][0],
             'recent'        => $recent,
-            'menu'          => parse_json($menu),
             "pagination"    => $pagination,
         ]);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\PopularityComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +14,9 @@ class ComposerServiceProvider extends ServiceProvider
         // Using class based composers...
         View::composer(
             [''], PopularityComposer::class
+        );
+        View::composer(
+            ['*'], MenuComposer::class
         );
     }
 

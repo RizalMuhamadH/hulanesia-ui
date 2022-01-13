@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Repository\Elasticsearch;
 use Carbon\Carbon;
 use CyrildeWit\EloquentViewable\Support\Period;
+use Illuminate\Support\Facades\Cache;
 use MeiliSearch\Client;
 
 class SearchController extends Controller
@@ -24,59 +25,46 @@ class SearchController extends Controller
         
         $word = $request->search;
 
-        $posts = $this->repository->get('article', [
-            'from'      => 0,
-            'size'      => 20,
-            '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-            'sort'      => [
-                [
-                    'id' => [
-                        'order' => 'desc'
-                    ]
-                ]
-            ],
-            'query'     => [
-                'bool' => [
-                    'must' => [
-                        [
-                            'match' => [
-                                'status' => 'PUBLISH'
-                            ]
-                        ],
-                        [
-                            'query_string' => [
-                                'query' => $word,
-                                'fields' => ['title']
-                            ],
+        $posts = Cache::remember('search_'.$word, 600, function() use($word) {
+            $res = $this->repository->get('article', [
+                'from'      => 0,
+                'size'      => 20,
+                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+                'sort'      => [
+                    [
+                        'id' => [
+                            'order' => 'desc'
                         ]
                     ]
-
-                ]
-            ]
-        ]);
-
-        $posts = parse_json($posts);
-
-        $menu = $this->repository->get('category', [
-            'sort'      => [
-                [
-                    'order' => [
-                        'order' => 'asc'
+                ],
+                'query'     => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'match' => [
+                                    'status' => 'PUBLISH'
+                                ]
+                            ],
+                            [
+                                'query_string' => [
+                                    'query' => $word,
+                                    'fields' => ['title']
+                                ],
+                            ]
+                        ]
+    
                     ]
                 ]
-            ],
-            'query'     => [
-                'match' => [
-                    'present' => 1
-                ]
-            ]
-        ]);
+            ]);
+
+            return parse_json($res);
+        });
 
         // return $posts;
 
 
         $pagination = $this->paginate($posts['total']['value'], $this->size);
 
-        return view('search', ['posts' => $posts, 'menu' => parse_json($menu), 'search' => $word, 'pagination' => $pagination]);
+        return view('search', ['posts' => $posts, 'search' => $word, 'pagination' => $pagination]);
     }
 }

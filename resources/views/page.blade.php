@@ -1,15 +1,15 @@
 <x-layouts.app>
     @push('title')
-        <title>Wehealth - {{ $setting->name }}</title>
+        <title>Wehealth - {{ $setting['_source']['name'] }}</title>
     @endpush
     @push('head')
-    <meta name="description" content="{{ $setting->meta_description ?? $setting->name }}">
+    <meta name="description" content="{{ $setting['_source']['meta_description'] ?? $setting['_source']['name'] }}">
     <meta name="keywords" content="{{ env('META_KEYWORD') }}">
     <meta name="author" content="Wehealth">
-    <meta property="og:title" content="{{ $setting->name }}">
-    <meta property="og:description" content="{{ $setting->meta_description ?? $setting->name }}">
+    <meta property="og:title" content="{{ $setting['_source']['name'] }}">
+    <meta property="og:description" content="{{ $setting->meta_description ?? $setting['_source']['name'] }}">
     <meta property="og:image" content="{{ Request::url() }}/favicon.ico">
-    <meta property="og:site_name" content="{{ $setting->name }}">
+    <meta property="og:site_name" content="{{ $setting['_source']['name'] }}">
     @endpush
     <x-slot name="nav">
         <x-navbar :menu="$menu"></x-navbar>
@@ -26,7 +26,7 @@
 
 
                 <div class="lg:w-1/3 w-full px-4">
-                    <x-popular-news :posts="$popular"></x-popular-news>
+                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
                     <!-- popular-wrapper -->
                 </div>
 
