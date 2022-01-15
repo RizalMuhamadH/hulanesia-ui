@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="lg:w-1/3 w-full px-4">
-                    {{-- <x-popular-news :posts="$popular"></x-popular-news> --}}
+                    <x-popular-news :posts="$popular"></x-popular-news>
                     <!-- popular-wrapper -->
                 </div>
             </div>

@@ -14,6 +14,7 @@ use MeiliSearch\Client;
 class SearchController extends Controller
 {
     private $repository;
+    private $size = 20;
 
     public function __construct(Elasticsearch $repository)
     {
@@ -24,11 +25,12 @@ class SearchController extends Controller
     {
         
         $word = $request->search;
+        $size = $this->size;
 
-        $posts = Cache::remember('search_'.$word, 600, function() use($word) {
+        $posts = Cache::remember('search_'.$word, 600, function() use($word, $size) {
             $res = $this->repository->get('article', [
                 'from'      => 0,
-                'size'      => 20,
+                'size'      => $size,
                 '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
                 'sort'      => [
                     [

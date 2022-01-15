@@ -11,9 +11,10 @@ class Footer extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $menu;
+    public function __construct($menu)
     {
-        //
+        $this->menu = $menu;
     }
 
     /**

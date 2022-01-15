@@ -13,7 +13,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         // Using class based composers...
         View::composer(
-            [''], PopularityComposer::class
+            ['*'], PopularityComposer::class
         );
         View::composer(
             ['*'], MenuComposer::class

@@ -18,7 +18,7 @@
             <div class="flex w-full items-center justify-between">
                 <div class="flex w-full items-center justify-between">
                     <a class="text-2xl font-bold text-gray-800 transition-colors duration-200 transform lg:text-3xl hover:text-gray-700"
-                        href="#">Brand</a>
+                        href="/">Hulanesia</a>
 
                     <!-- Search input on desktop screen -->
                     <div class="hidden mx-10 md:block">

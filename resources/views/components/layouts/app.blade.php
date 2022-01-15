@@ -48,7 +48,7 @@
                 {{ $content }}
             </div>
         </div>
-        <x-footer></x-footer>
+        <x-footer :menu="$menu"></x-footer>
 
         <button @click="scrolltoTop"
             class="p-3 fixed bottom-10 right-10 animate-bounce z-10 rounded-full shadow-md bg-gray-100 hidden" id="topButton">
