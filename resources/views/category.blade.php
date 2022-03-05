@@ -18,7 +18,7 @@
         <div class="container mx-auto my-8">
             <div class="flex flex-wrap">
                 <div class="lg:w-2/3 w-full flex flex-col space-y-10">
-                    <x-headline :headline="$headline"></x-headline>
+                    {{-- <x-headline :headline="$headline"></x-headline> --}}
                     <div>
                         <x-recent-news :posts="$recent['hits']" :name="$category['_source']['name']"></x-recent-news>
                         {{-- @if (count($recent['hits']) == 20) --}}

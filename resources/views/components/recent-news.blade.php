@@ -26,10 +26,10 @@
                 <!-- most-recent-item-info -->
             </div>
 
-            {{-- <img class="sm:w-1/3 h-auto md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded overflow-hidden md:order-2 order-1"
-                src="/storage/{{ $item['image']['media']['small'] ?? '' }}" alt="{{ $item['title'] }}"> --}}
             <img class="w-1/3 h-24 md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded-lg overflow-hidden md:order-2 order-1"
-                src="https://picsum.photos/seed/picsum/200/300">
+                src="{{ env('ASSETS') }}/storage/{{ $item['_source']['image']['media']['small'] ?? '' }}" alt="{{ $item['_source']['title'] }}">
+            {{-- <img class="w-1/3 h-24 md:h-44 sm:mt-0 mt-3 bg-gray-100 object-cover rounded-lg overflow-hidden md:order-2 order-1"
+                src="https://picsum.photos/seed/picsum/200/300"> --}}
 
         </div>
     @endforeach

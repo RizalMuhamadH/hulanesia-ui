@@ -13,9 +13,15 @@ class Elasticsearch {
             'headers'   => ['Content-Type' => 'application/json'],
         ]);
 
-        return $http->request('GET', env('ELASTICSEARCH_HOST', '').$index.'/_search', [
-            'body' => json_encode($params)
-        ]);
+        if($params) {
+            $body = [
+                'body' => json_encode($params)
+            ];
+        } else {
+            $body = [];
+        }
+
+        return $http->request('GET', env('ELASTICSEARCH_HOST', '').$index.'/_search', $body);
     }
 
     public function doc($index, $id)

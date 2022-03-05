@@ -28,8 +28,8 @@
                     <!-- popular-wrapper -->
                 </div>
 
-                {{-- <x-recent-photo :photos="$photos"></x-recent-photo> --}}
-                <x-another-news :posts="[]" :name="''"></x-another-news>
+                <x-recent-photo :photos="$photos"></x-recent-photo>
+                {{-- <x-another-news :posts="[]" :name="''"></x-another-news> --}}
                 {{-- <x-breaking-news :posts="$editorChoice" :name="'Editor Choice'"></x-breaking-news> --}}
             </div>
         </div>
@@ -71,7 +71,7 @@
 
             {{-- <x-collection-news :posts="$recent[1]" :name="'Gaya hidup'"></x-collection-news> --}}
 
-            <x-another-news :posts="[]" :name="''"></x-another-news>
+            {{-- <x-another-news :posts="[]" :name="''"></x-another-news> --}}
 
             {{-- <x-category-news :posts="$recent[1]" :name="'Otomotif'"></x-category-news> --}}
         </div>

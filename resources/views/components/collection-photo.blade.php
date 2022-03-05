@@ -9,8 +9,8 @@
             @foreach ($photos as $item)
                 <div class="w-full md:w-1/2 px-2 pb-12">
                     <div class="h-full bg-white rounded overflow-hidden shadow-md hover:shadow-lg relative smooth">
-                        <a href="{{ route('photo', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}" class="no-underline hover:no-underline">
-                            <img src="{{ env('STORAGE') . '/storage/' . $item['_source']['images'][0]['media']['original'] }}"
+                        <a href="{{ route('photo.read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}" class="no-underline hover:no-underline">
+                            <img src="{{ env('ASSETS') . '/storage/' . $item['_source']['images'][0]['media']['original'] }}"
                             alt="{{ $item['_source']['title'] }}"
                                 class="h-48 w-full rounded-t object-cover shadow">
                             <div class="p-6 h-auto md:h-48">

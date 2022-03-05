@@ -16424,25 +16424,33 @@ __webpack_require__.r(__webpack_exports__);
 
 var docEditor = document.getElementById("editor-choice");
 var docHeadline = document.getElementById("headline");
+var headline;
+var editor;
 
 if (docEditor) {
-  var editor = new Flicking("#editor-choice", {
+  editor = new Flicking("#editor-choice", {
     circular: true,
     horizontal: true,
     align: "center",
     autoResize: true
   });
-  editor.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Arrow());
+  editor.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Arrow({
+    prevElSelector: ".editor-prev",
+    nextElSelector: ".editor-next"
+  }));
 }
 
 if (docHeadline) {
-  var headline = new Flicking("#headline", {
+  headline = new Flicking("#headline", {
     circular: true,
     horizontal: true,
     align: "center",
     autoResize: true
   });
-  headline.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Arrow());
+  headline.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Arrow({
+    prevElSelector: ".headline-prev",
+    nextElSelector: ".headline-next"
+  }));
 }
 })();
 

@@ -27,61 +27,22 @@ class HomeController extends Controller
     public function index()
     {
 
-        $headline = Cache::remember('home_headline', 300, function(){
-            $res = $this->repository->get('article',[
-                'from'      => 0,
-                'size'      => 5,
-                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-                'sort'      => [
-                    [
-                        'id' => [
-                            'order' => 'desc'
-                        ]
-                    ]
-                ],
-                'query'     => [
-                    'match' => [
-                        'feature.id' => 1
-                    ],
-                    'match' => [
-                        'status' => 'PUBLISH'
-                    ]
-                ]
-            ]);
+        $headline = Cache::remember('home_headline', 300, function () {
+            $res = $this->repository->get('headline', []);
 
             return parse_json($res);
         });
 
 
         $editor_choice = Cache::remember('editor_choice', 300, function () {
-            $res = $this->repository->get('article',[
-                'from'      => 0,
-                'size'      => 5,
-                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-                'sort'      => [
-                    [
-                        'id' => [
-                            'order' => 'desc'
-                        ]
-                    ]
-                ],
-                'query'     => [
-                    'match' => [
-                        'feature.id' => 2
-                    ],
-                    'match' => [
-                        'status' => 'PUBLISH'
-                    ]
-                ]
-            ]);
+            $res = $this->repository->get('editor_choice', []);
 
             return parse_json($res);
-            
         });
 
 
         $recent = Cache::remember('home_recent', 180, function () {
-            $res = $this->repository->get('article',[
+            $res = $this->repository->get('article', [
                 'from'      => 0,
                 'size'      => 20,
                 '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
@@ -100,14 +61,13 @@ class HomeController extends Controller
             ]);
 
             return parse_json($res);
-            
         });
-        
+
 
         $recent = array_chunk($recent['hits'], 10);
 
         $photos = Cache::remember('home_photo', 600, function () {
-            $res = $this->repository->get('photo',[
+            $res = $this->repository->get('photo', [
                 'from'      => 0,
                 'size'      => 20,
                 '_source'   => ['id', 'title', 'slug', 'images.media.original', 'image.caption', 'created_at'],
@@ -121,9 +81,8 @@ class HomeController extends Controller
             ]);
 
             return parse_json($res);
-            
         });
-        
+
 
         // // $mostPopular = Analytics::fetchMostVisitedPages(Period::days(7), 10);
 

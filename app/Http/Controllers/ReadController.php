@@ -31,7 +31,7 @@ class ReadController extends Controller
 
         });
 
-        $max_paragraf = 2;
+        $max_paragraf = 5;
 
         $content = read_content($post['_source']['body'], $max_paragraf, $request->page ?? 1);
 

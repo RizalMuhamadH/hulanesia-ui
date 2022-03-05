@@ -20,15 +20,14 @@
     <meta http-equiv="content-language" content="In-Id">
     <meta name="geo.placename" content="Indonesia">
 
-    
-    @livewireStyles
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
+
     @stack('style')
 
     <style>
         html {
-            scroll-behavior: smooth;    
+            scroll-behavior: smooth;
         }
+
     </style>
 
     <script src="https://unpkg.com/@egjs/flicking@4.0.0-beta.4/dist/flicking.pkgd.min.js"></script>
@@ -37,21 +36,24 @@
     <link rel="stylesheet" href="https://naver.github.io/egjs-flicking-plugins/release/latest/dist/pagination.min.css">
     {{-- <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script> --}}
     <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
-    <div id="app" x-data="app" class="font-poppins w-full">
+    <div id="app" x-data="app" class="font-poppins w-full relative">
         {{ $nav }}
         <div class="w-full md:grid flex md:grid-cols-12 grid-cols-none">
-            <div class="w-full col-span-8 col-start-3">
+            <div class="w-full col-span-8 col-start-3 mt-32">
                 {{ $content }}
             </div>
         </div>
         <x-footer :menu="$menu"></x-footer>
 
         <button @click="scrolltoTop"
-            class="p-3 fixed bottom-10 right-10 animate-bounce z-10 rounded-full shadow-md bg-gray-100 hidden" id="topButton">
+            class="p-3 fixed bottom-10 right-10 animate-bounce z-10 rounded-full shadow-md bg-gray-100 hidden"
+            id="topButton">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18">
@@ -61,7 +63,6 @@
     </div>
 
     @stack('script')
-    @livewireScripts
 
     <script>
         document.addEventListener('alpine:init', () => {
@@ -72,12 +73,12 @@
                 }
             }));
         });
-    
+
         var topBtn = document.getElementById("topButton");
-        window.onscroll = function () {
+        window.onscroll = function() {
             (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) ?
             topBtn.classList.remove("hidden"): topBtn.classList.add("hidden");
-    
+
         }
     </script>
 

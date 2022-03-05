@@ -1,4 +1,4 @@
-<div class="lg:sticky lg:top-20">
+<div class="lg:sticky lg:top-32">
 
     <div class="flex flex-wrap text-gray-900 mb-6">
         <h3 class="text-2xl font-semibold">Popular</h3>

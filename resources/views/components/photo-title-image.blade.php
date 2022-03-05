@@ -19,7 +19,7 @@
                 </svg>
             </li> --}}
             <li class="inline-flex items-center">
-                <a href="{{ route('index') }}" class="text-teal-400">Photo</a>
+                <a href="{{ route('photo.index') }}" class="text-teal-400">Photo</a>
             </li>
         </ul>
     </div>
@@ -51,13 +51,13 @@
         @foreach ($photo['_source']['images'] as $item)
             @if ($loop->first)
                 <a data-caption="{{ $item['caption'] }}"
-                    data-fancybox="gallery-1" href="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}" alt="{{ $photo['_source']['title'] }}">
-                    <img src="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}" alt="{{ $item['caption'] }}"
+                    data-fancybox="gallery-1" href="{{ env('ASSETS').'/storage/'.$item['media']['original'] }}" alt="{{ $photo['_source']['title'] }}">
+                    <img src="{{ env('ASSETS').'/storage/'.$item['media']['original'] }}" alt="{{ $item['caption'] }}"
                         class="w-full">
                 </a>
             @else
                 <a data-caption="{{ $item['caption'] }}"
-                    data-fancybox="gallery-1" href="{{ env('STORAGE').'/storage/'.$item['media']['original'] }}">
+                    data-fancybox="gallery-1" href="{{ env('ASSETS').'/storage/'.$item['media']['original'] }}">
                 </a>
             @endif
 

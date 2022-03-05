@@ -1,7 +1,7 @@
 <footer class="mt-8">
-    <div class="border-t border-gray-200 py-6">
+    <div class="footer">
         <div class="flex flex-wrap">
-            <div class="lg:w-1/2 w-full lg:m-0 m-6 mb-0 text-center">
+            <div class="footer__content text-center">
                 <p class="text-sm text-gray-700">Copyright 2021 Hulanesia</p>
             </div>
             {{-- <div class="lg:w-1/3 w-full lg:m-0 m-6 mb-0">
@@ -23,14 +23,14 @@
                     </li>
                 </ul>
             </div> --}}
-            <div class="lg:w-1/2 w-full lg:m-0 m-6 mb-0">
+            <div class="footer__content">
                 <ul class="text-center">
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'tentang-kami') }}">Tentang Kami</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'redaksi') }}">Redaksi</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'info-iklan') }}">Info Iklan</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'Karir') }}">Karir</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'kontak') }}">Kontak</a> </li>
-                    <li class="inline-block"> <a class="text-gray-600 hover:text-black hover:underline text-sm p-3" href="{{ route('page', 'pedoman') }}">Pedoman</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'tentang-kami') }}">Tentang Kami</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'redaksi') }}">Redaksi</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'info-iklan') }}">Info Iklan</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'Karir') }}">Karir</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'kontak') }}">Kontak</a> </li>
+                    <li class="inline-block"> <a class="footer__content__menu" href="{{ route('page', 'pedoman') }}">Pedoman</a> </li>
                 </ul>
             </div>
         </div>

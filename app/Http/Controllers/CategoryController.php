@@ -23,34 +23,34 @@ class CategoryController extends Controller
 
     public function index($slug)
     {
-        $headline = Cache::remember('category_headline_'.$slug, 300, function() use ($slug) {
-            $res = $this->repository->get('article', [
-                'from'      => 0,
-                'size'      => 5,
-                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-                'sort'      => [
-                    [
-                        'id' => [
-                            'order' => 'desc'
-                        ]
-                    ]
-                ],
-                'query'     => [
-                    'match' => [
-                        'feature.id' => 1
-                    ],
-                    'match' => [
-                        'status' => 'PUBLISH'
-                    ],
-                    'match' => [
-                        'category.slug' => $slug
-                    ]
-                ]
-            ]);
+        // $headline = Cache::remember('category_headline_'.$slug, 300, function() use ($slug) {
+        //     $res = $this->repository->get('article', [
+        //         'from'      => 0,
+        //         'size'      => 5,
+        //         '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+        //         'sort'      => [
+        //             [
+        //                 'id' => [
+        //                     'order' => 'desc'
+        //                 ]
+        //             ]
+        //         ],
+        //         'query'     => [
+        //             'match' => [
+        //                 'feature.id' => 1
+        //             ],
+        //             'match' => [
+        //                 'status' => 'PUBLISH'
+        //             ],
+        //             'match' => [
+        //                 'category.slug' => $slug
+        //             ]
+        //         ]
+        //     ]);
 
-            return parse_json($res);
+        //     return parse_json($res);
 
-        });
+        // });
 
         $recent = Cache::remember('category_recent_'.$slug, 180, function () use($slug) {
             $res = $this->repository->get('article', [
@@ -96,7 +96,7 @@ class CategoryController extends Controller
         $pagination = $this->paginate($recent['total']['value'], $this->size);
 
         return view('category', [
-            'headline'      => $headline,
+            // 'headline'      => $headline,
             'category'      => $category['hits'][0],
             'recent'        => $recent,
             "pagination"    => $pagination,

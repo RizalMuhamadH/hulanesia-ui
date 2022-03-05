@@ -45,7 +45,7 @@
 
     </div>
     <div class="md:rounded-lg overflow-hidden shadow-2xl w-full md:h-101 mb-10 self-center">
-        <img src="{{ env('STORAGE') }}/storage/{{ $post['_source']['image']['media']['small'] ?? '' }}" alt="{{ $post['_source']['title'] }}" class="object-cover w-full">
+        <img src="{{ env('ASSETS') }}/storage/{{ $post['_source']['image']['media']['original'] ?? '' }}" alt="{{ $post['_source']['title'] }}" class="object-cover w-full">
     </div>
     <p class="text-center text-sm ">
         {{ $post['_source']['image']['caption'] ?? '' }}

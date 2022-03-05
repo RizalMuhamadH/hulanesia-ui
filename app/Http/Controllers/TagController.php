@@ -21,51 +21,51 @@ class TagController extends Controller
     {
         $this->repository = $repository;
     }
-    
+
     public function index($slug)
     {
         $size = $this->size;
-        $headline = Cache::remember('headline_tag_'.$slug, 600, function () use($slug, $size) {
-            $res = $this->repository->get('article',[
-                'from'      => 0,
-                'size'      => $size,
-                '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
-                'sort'      => [
-                    [
-                        'id' => [
-                            'order' => 'desc'
-                        ]
-                    ]
-                ],
-                'query'     => [
-                    'bool' => [
-                        'must' => [
-                            [
-                                'match' => [
-                                    'feature.id' => 1
-                                ],
-                            ],
-                            [
-                                'match' => [
-                                    'status' => 'PUBLISH'
-                                ]
-                            ],
-                            [
-                                'match' => [
-                                    'tags.slug' => $slug
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]);
+        // $headline = Cache::remember('headline_tag_'.$slug, 600, function () use($slug, $size) {
+        //     $res = $this->repository->get('article',[
+        //         'from'      => 0,
+        //         'size'      => $size,
+        //         '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
+        //         'sort'      => [
+        //             [
+        //                 'id' => [
+        //                     'order' => 'desc'
+        //                 ]
+        //             ]
+        //         ],
+        //         'query'     => [
+        //             'bool' => [
+        //                 'must' => [
+        //                     [
+        //                         'match' => [
+        //                             'feature.id' => 1
+        //                         ],
+        //                     ],
+        //                     [
+        //                         'match' => [
+        //                             'status' => 'PUBLISH'
+        //                         ]
+        //                     ],
+        //                     [
+        //                         'match' => [
+        //                             'tags.slug' => $slug
+        //                         ]
+        //                     ]
+        //                 ]
+        //             ]
+        //         ]
+        //     ]);
 
-            return parse_json($res);
-            
-        });
+        //     return parse_json($res);
 
-        $recent = Cache::remember('recent_tag_'.$slug, 300, function () use($slug) {
-            $res = $this->repository->get('article',[
+        // });
+
+        $recent = Cache::remember('recent_tag_' . $slug, 300, function () use ($slug) {
+            $res = $this->repository->get('article', [
                 'from'      => 0,
                 'size'      => 20,
                 '_source'   => ['id', 'title', 'slug', 'description', 'image.media.small', 'image.caption', 'feature', 'category', 'author.name', 'published_at', 'created_at'],
@@ -95,11 +95,10 @@ class TagController extends Controller
             ]);
 
             return parse_json($res);
-            
         });
 
-        
-        $tag = Cache::remember('tag_'.$slug, 300, function () use($slug) {
+
+        $tag = Cache::remember('tag_' . $slug, 300, function () use ($slug) {
             $res = $this->repository->get('tag', [
                 'query'     => [
                     'match' => [
@@ -109,7 +108,6 @@ class TagController extends Controller
             ]);
 
             return parse_json($res);
-            
         });
 
 
@@ -117,6 +115,10 @@ class TagController extends Controller
 
         $pagination = $this->paginate($recent['total']['value'], $this->size);
 
-        return view('tag', ['headline' => $headline ,'tag' => $tag['hits'][0], 'posts' => $recent, "pagination" => $pagination]);
+        return view('tag', [
+            // 'headline' => $headline, 
+            'tag' => $tag['hits'][0], 
+            'posts' => $recent, 
+            "pagination" => $pagination]);
     }
 }

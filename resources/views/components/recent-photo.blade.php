@@ -25,7 +25,7 @@
                             {{ Carbon\Carbon::parse($photos['hits'][0]['_source']['created_at'])->format('d M Y, H:m') }}
                             WIB
                         </div>
-                        <a href="{{ route('photo', [$photos['hits'][0]['_source']['id'], Carbon\Carbon::parse($photos['hits'][0]['_source']['created_at'])->format('dmY'), $photos['hits'][0]['_source']['slug']]) }}">
+                        <a href="{{ route('photo.read', [$photos['hits'][0]['_source']['id'], Carbon\Carbon::parse($photos['hits'][0]['_source']['created_at'])->format('dmY'), $photos['hits'][0]['_source']['slug']]) }}">
                             <p class="font-medium text-white text-2xl line-clamp-2">
                                 {{ $photos['hits'][0]['_source']['title'] }}
                             </p>
@@ -35,7 +35,7 @@
                     <div class="w-full h-full bg-gray-600 absolute z-10 rounded-xl border-none opacity-30 ">
                     </div>
                     <img class="rounded-xl h-full w-full align-middle border-none object-cover"
-                        src="{{ env('STORAGE').'/storage/'.$photos['hits'][0]['_source']['images'][0]['media']['original'] }}" alt="{{ $photos['hits'][0]['_source']['title'] }}" alt="{{ $photos['hits'][0]['_source']['title'] }}" />
+                        src="{{ env('ASSETS').'/storage/'.$photos['hits'][0]['_source']['images'][0]['media']['original'] }}" alt="{{ $photos['hits'][0]['_source']['title'] }}" alt="{{ $photos['hits'][0]['_source']['title'] }}" />
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                         {{-- <img class="rounded-xl w-48 h-36 align-middle border-none object-cover" src="/storage/{{ $item['images'][0]['media']['cropped'] }}" alt="{{ $item['title'] }}" /> --}}
 
                         <img class="rounded-xl w-48 h-36 align-middle border-none object-cover"
-                            src="{{ env('STORAGE').'/storage/'.$item['_source']['images'][0]['media']['original'] }}" alt="{{ $item['_source']['title'] }}" alt="{{ $item['_source']['title'] }}" />
+                            src="{{ env('ASSETS').'/storage/'.$item['_source']['images'][0]['media']['original'] }}" alt="{{ $item['_source']['title'] }}" alt="{{ $item['_source']['title'] }}" />
 
                         <div class="flex flex-col px-3 py-3">
                             <div class="text-sm py-2">
@@ -73,9 +73,9 @@
                     <!-- Slides -->
                     @foreach ($photos['hits'] as $item)
                     <div class="w-4/5 xl:w-1/4 p-6 flex flex-col">
-                        <a href="{{ route('photo', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">
+                        <a href="{{ route('photo.read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">
                             <img class="hover:grow hover:shadow-lg"
-                                src="{{ env('STORAGE').'/storage/'.$item['_source']['images'][0]['media']['original'] }}" alt="{{ $item['_source']['title'] }}">
+                                src="{{ env('ASSETS').'/storage/'.$item['_source']['images'][0]['media']['original'] }}" alt="{{ $item['_source']['title'] }}">
                             <div class="pt-3 flex items-center justify-between">
                                 <p class="">{{ $item['_source']['title'] }}</p>
                                 {{-- <svg class="h-6 w-6 fill-current text-gray-500 hover:text-black"
