@@ -48,7 +48,11 @@
         @apply w-full py-2 pl-10 pr-4 text-gray-700 bg-white border border-gray-300 rounded-md  focus:border-blue-500 focus:outline-none focus:ring;
     }
 
-    .flicking-pagination-bullet-active {
-        @apply bg-teal-500;
+    .flicking-pagination {
+        @apply w-full z-10 left-2 static text-left pl-4 mt-4 bottom-0;
+    }
+
+    .flicking-pagination .flicking-pagination-bullet-active {
+        @apply bg-teal-400 w-6 rounded-xl;
     }
 }

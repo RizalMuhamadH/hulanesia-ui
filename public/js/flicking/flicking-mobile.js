@@ -16449,7 +16449,8 @@ if (docHeadline) {
     autoResize: true,
     duration: 500
   });
-  headline.addPlugins(new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Fade(), new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Pagination({
+  headline.addPlugins( // new Fade(),
+  new _egjs_flicking_plugins__WEBPACK_IMPORTED_MODULE_0__.Pagination({
     type: "bullet"
   }));
 }

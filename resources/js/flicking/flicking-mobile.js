@@ -28,7 +28,7 @@ if (docHeadline) {
     });
 
     headline.addPlugins(
-        new Fade(),
+        // new Fade(),
         new Pagination({
             type: "bullet",
         })

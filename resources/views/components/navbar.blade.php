@@ -35,7 +35,7 @@
                         </form>
                     </div>
                 </div>
-                @if (Agent::isMobile())
+                {{-- @if (Agent::isMobile()) --}}
                     <!-- Mobile menu button -->
                     <div class="flex md:hidden">
                         <button type="button" x-on:click="toggle"
@@ -48,7 +48,7 @@
                             </svg>
                         </button>
                     </div>
-                @endif
+                {{-- @endif --}}
             </div>
 
             <!-- Mobile Menu open: "block", Menu closed: "hidden" -->

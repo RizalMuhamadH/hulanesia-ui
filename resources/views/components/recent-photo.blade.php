@@ -72,9 +72,9 @@
                 <div class="flicking-camera">
                     <!-- Slides -->
                     @foreach ($photos['hits'] as $item)
-                    <div class="w-4/5 xl:w-1/4 p-6 flex flex-col">
+                    <div class="w-4/5 xl:w-1/4 pr-4 flex flex-col">
                         <a href="{{ route('photo.read', [$item['_source']['id'], Carbon\Carbon::parse($item['_source']['created_at'])->format('dmY'), $item['_source']['slug']]) }}">
-                            <img class="hover:grow hover:shadow-lg"
+                            <img class="hover:grow hover:shadow-lg h-56 object-cover"
                                 src="{{ env('ASSETS').'/storage/'.$item['_source']['images'][0]['media']['original'] }}" alt="{{ $item['_source']['title'] }}">
                             <div class="pt-3 flex items-center justify-between">
                                 <p class="">{{ $item['_source']['title'] }}</p>
